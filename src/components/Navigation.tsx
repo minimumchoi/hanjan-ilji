@@ -1,7 +1,6 @@
-import { SVGIcon } from "@/components/SVGIcon";
+import { SVGIcon, IconName } from "@/components/SVGIcon";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import type { IconName } from "@/components/SVGIcon";
 
 export default function Navigation() {
   const router = useRouter();
@@ -19,25 +18,30 @@ export default function Navigation() {
       aria-label="하단메뉴"
     >
       <ul className="flex h-full w-full flex-row">
-        {navItems.map((item) => (
-          <li key={item.name} className="group flex-1">
-            <Link
-              href={item.href}
-              className="flex h-full w-full flex-col items-center justify-center"
-            >
-              <SVGIcon
-                name={item.name}
-                size={30}
-                className={`transition-colors duration-200 ${
-                  router.pathname === item.href
-                    ? "text-primary"
-                    : "group-hover:text-primary text-gray-300"
-                }`}
-              />
-              <span className="sr-only">{item.label}</span>
-            </Link>
-          </li>
-        ))}
+        {navItems.map((item) => {
+          const isCurrent = router.pathname === item.href;
+
+          return (
+            <li key={item.name} className="group flex-1">
+              <Link
+                href={item.href}
+                aria-label={item.label}
+                aria-current={isCurrent ? "page" : undefined}
+                className="flex h-full w-full flex-col items-center justify-center"
+              >
+                <SVGIcon
+                  name={item.name}
+                  size={30}
+                  className={`transition-colors duration-200 ${
+                    isCurrent
+                      ? "text-primary"
+                      : "group-hover:text-primary text-gray-300"
+                  }`}
+                />
+              </Link>
+            </li>
+          );
+        })}
       </ul>
     </nav>
   );
