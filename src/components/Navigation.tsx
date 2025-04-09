@@ -1,0 +1,44 @@
+import { SVGIcon } from "@/components/SVGIcon";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import type { IconName } from "@/components/SVGIcon";
+
+export default function Navigation() {
+  const router = useRouter();
+
+  const navItems: { name: IconName; label: string; href: string }[] = [
+    { name: "home", label: "홈", href: "/home" },
+    { name: "calendar", label: "달력", href: "/calendar" },
+    { name: "food", label: "안주", href: "/food" },
+    { name: "beer", label: "마이페이지", href: "/mypage" },
+  ];
+
+  return (
+    <nav
+      className="fixed bottom-0 left-0 z-50 h-[3.75rem] w-full bg-white"
+      aria-label="하단메뉴"
+    >
+      <ul className="flex h-full w-full flex-row">
+        {navItems.map((item) => (
+          <li key={item.name} className="group flex-1">
+            <Link
+              href={item.href}
+              className="flex h-full w-full flex-col items-center justify-center"
+            >
+              <SVGIcon
+                name={item.name}
+                size={30}
+                className={`transition-colors duration-200 ${
+                  router.pathname === item.href
+                    ? "text-primary"
+                    : "group-hover:text-primary text-gray-300"
+                }`}
+              />
+              <span className="sr-only">{item.label}</span>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  );
+}
