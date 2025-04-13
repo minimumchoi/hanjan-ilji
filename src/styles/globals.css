@@ -10,4 +10,5 @@
   --color-gray-100: #f5f5f5;
   --color-white: #ffffff;
   --color-text: #3a3a3a;
+  --font-pretendard: var(--font-pretendard), "sans-serif";
 }
