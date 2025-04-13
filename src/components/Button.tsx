@@ -5,7 +5,7 @@ type ButtonType = {
   color?: "primary" | "accent";
   children: ReactNode;
   onClick: () => void;
-  disabled: boolean;
+  disabled?: boolean;
 };
 
 export default function Button({
@@ -38,7 +38,7 @@ export default function Button({
     <button
       type="button"
       onClick={onClick}
-      className={`${BtnSize} ${BtnColor} rounded-2xl`}
+      className={`${BtnSize} ${BtnColor} rounded-2xl font-bold`}
       disabled={disabled}
     >
       {children}
