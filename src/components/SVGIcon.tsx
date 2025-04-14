@@ -1,6 +1,6 @@
 import type { SVGAttributes } from "react";
 
-export type IconName = "home" | "calendar" | "food" | "beer";
+export type IconName = "home" | "calendar" | "food" | "beer" | "arrow";
 
 type SVGIconProp = {
   name: IconName;
@@ -9,7 +9,13 @@ type SVGIconProp = {
 
 export const SVGIcon = ({ name, size = 32, className }: SVGIconProp) => {
   return (
-    <svg className={className} fill="none" width={size} height={size}>
+    <svg
+      className={className}
+      fill="none"
+      width={size}
+      height={size}
+      viewBox="0 0 30 30"
+    >
       <use href={`/sprite.svg#${name}`} />
     </svg>
   );
