@@ -1,6 +1,12 @@
 import type { SVGAttributes } from "react";
 
-export type IconName = "home" | "calendar" | "food" | "beer" | "arrow";
+export type IconName =
+  | "home"
+  | "calendar"
+  | "food"
+  | "beer"
+  | "arrow"
+  | "return";
 
 type SVGIconProp = {
   name: IconName;
