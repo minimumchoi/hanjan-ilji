@@ -24,7 +24,7 @@ export default function DetailedModal({
       ref={modalRef}
       className="bg-accent h-123 w-83 rounded-lg backdrop:bg-gray-300"
     >
-      <div className="flex w-full flex-col items-center justify-center">
+      <div className="text-text flex w-full flex-col items-center justify-center">
         <div className="mt-8 h-8 w-36 text-xl font-bold">{formattedDate}</div>
         <ul className="mx-10 mt-10 flex flex-col gap-8 self-stretch">
           {modalListData.map((d) => (
