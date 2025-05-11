@@ -6,7 +6,8 @@ export type IconName =
   | "food"
   | "beer"
   | "arrow"
-  | "return";
+  | "return"
+  | "back";
 
 type SVGIconProp = {
   name: IconName;
