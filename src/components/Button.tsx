@@ -17,7 +17,7 @@ export default function Button({
 }: ButtonType) {
   const BtnSize =
     size === "l"
-      ? "h-20 w-86 text-2xl"
+      ? "h-20 w-full text-2xl"
       : size === "m"
         ? "h-15 w-54 text-xl"
         : "h-15 w-43 text-xl";
