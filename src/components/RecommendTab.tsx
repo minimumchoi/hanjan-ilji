@@ -43,7 +43,7 @@ export default function RecommendTab() {
         ))}
         {showCount < filteredFood.length && (
           <button
-            className="text-text mt-3 text-sm font-bold"
+            className="text-text mt-3 cursor-pointer text-sm font-bold"
             onClick={() => {
               setShowCount((prev) => prev + 3);
             }}
