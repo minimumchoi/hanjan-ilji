@@ -12,7 +12,7 @@ export default function Login() {
   ];
 
   const handleBackClick = () => {
-    router.push("/home");
+    router.push("/");
   };
   const handleLoginClick = () => {};
   return (

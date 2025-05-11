@@ -14,7 +14,7 @@ export default function Signup() {
   ];
 
   const handleBackClick = () => {
-    router.push("/home");
+    router.push("/");
   };
 
   const handleSignUpClick = () => {
