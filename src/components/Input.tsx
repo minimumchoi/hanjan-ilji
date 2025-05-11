@@ -5,6 +5,7 @@ type InputProp = {
   showValidation: boolean;
   value: string;
   onChange: () => void;
+  labelId: string;
 };
 
 export default function Input({
@@ -12,6 +13,7 @@ export default function Input({
   showValidation,
   value,
   onChange,
+  labelId,
 }: InputProp) {
   const config = {
     email: {
@@ -40,13 +42,18 @@ export default function Input({
         {...(type === "email"
           ? { pattern: "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}$" }
           : {})}
-        className="focus:border-primary h-12 w-78 border-b-3 border-gray-300 p-1.5 text-lg outline-none placeholder:text-base placeholder:text-gray-300"
+        className="focus:border-primary h-12 w-full border-b-3 border-gray-300 p-1.5 text-lg outline-none placeholder:text-base placeholder:text-gray-300"
         placeholder={placeholder}
         value={value}
         onChange={onChange}
+        id={labelId}
       />
-      {showValidation && (
-        <span className="mt-1 px-1.5 text-base text-red-500">{validMsg}</span>
+      {showValidation ? (
+        <span className="mt-1 h-6 px-1.5 text-base text-red-500">
+          {validMsg}
+        </span>
+      ) : (
+        <span className="mt-1 h-6 px-1.5 text-base"></span>
       )}
     </>
   );
