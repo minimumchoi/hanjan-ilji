@@ -31,7 +31,11 @@ export default function Layout({ children }: LayoutProps) {
       <div
         className={`${pretendard.variable} font-pretendard relative min-h-screen`}
       >
-        <main className={shouldHideNav ? "" : "pb-[3.75rem]"}>{children}</main>
+        <main
+          className={`max-w-[430px] ${shouldHideNav ? "" : "pb-[3.75rem]"}`}
+        >
+          {children}
+        </main>
         {!shouldHideNav && <Navigation />}
       </div>
     </>
