@@ -12,7 +12,7 @@ export default function Landing() {
     router.push("/signup");
   };
   return (
-    <div className="flex h-screen w-full flex-col items-center justify-between border px-9 py-[8vh]">
+    <div className="flex h-screen w-full flex-col items-center justify-between px-9 py-[8vh]">
       <div className="mt-[24vh]">
         <span className="h-5 text-base font-bold">
           적당히 즐기는 음주 습관 기록장
