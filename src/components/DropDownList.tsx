@@ -20,7 +20,7 @@ export default function DropDownList({
         <li key={list} role="option" aria-selected={selected === list}>
           <button
             type="button"
-            className={`hover:text-primary flex h-10 w-full items-center justify-center text-base font-semibold text-black transition-colors duration-150 hover:bg-gray-100`}
+            className={`hover:text-primary flex h-10 w-full items-center justify-center bg-purple-50 text-base font-semibold text-black transition-colors duration-150 hover:bg-gray-100`}
             onClick={() => onClick(list)}
           >
             {list}
