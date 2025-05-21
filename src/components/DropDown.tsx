@@ -4,17 +4,19 @@ import DropDownList from "./DropDownList";
 
 type DropBoxProp = {
   width: "sm" | "lg";
-  title?: string;
   listArr: string[];
+  onSelect: (value: string) => void;
+  value: string;
 };
 
 export default function DropDown({
   width,
-  title = "선택해주세요",
   listArr,
+  onSelect,
+  value,
 }: DropBoxProp) {
   const [isOpened, setIsOpened] = useState(false);
-  const [name, setName] = useState(title || "선택해주세요");
+  const [name, setName] = useState(value || "선택해주세요");
 
   const widthSize = {
     lg: "w-54",
@@ -23,9 +25,10 @@ export default function DropDown({
 
   const textColor = name === "선택해주세요" ? "text-gray-300" : "text-black";
 
-  const onClick = (e: string) => {
-    setName(e);
+  const onClick = (value: string) => {
+    setName(value);
     setIsOpened(false);
+    onSelect?.(value);
   };
 
   return (
