@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { feedback } from "@/data/feedback";
 import ProgressBar from "./ProgressBar";
-import { splitText } from "@/utils/utils";
 
 type DrinkProgressCardProp = {
   totalLimit: number;
@@ -33,11 +32,6 @@ export default function MonthlyProgress({
       setRandomMessage(found.messages[randomIndex]);
     }
   }, [drinkCount, totalLimit]);
-
-  const [line1, line2] = useMemo(
-    () => splitText(randomMessage),
-    [randomMessage],
-  );
 
   return (
     <section className="flex w-86 flex-col items-center gap-6 rounded-2xl bg-purple-50 pt-9 pb-12">
