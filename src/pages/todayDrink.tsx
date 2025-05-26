@@ -97,6 +97,7 @@ export default function TodayDrink() {
       return;
     }
     console.log("데이터 업로드 성공", formData);
+    router.push("./home");
   };
 
   const date = new Date();
