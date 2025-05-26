@@ -2,6 +2,10 @@ import Button from "@/components/Button";
 import DrinkInput from "@/components/DrinkInput";
 import { SVGIcon } from "@/components/SVGIcon";
 import { createClient } from "@/utils/supabase/component";
+import {
+  isVaildResolution,
+  isValidMaxAmount,
+} from "@/utils/todayDrinkValidaion";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
@@ -9,16 +13,36 @@ export default function MonthlyLimit() {
   const supabase = createClient();
   const router = useRouter();
   const [formData, setFormData] = useState({ limit: "", resolution: "" });
+  const [formErrors, setFormErrors] = useState({
+    limit: "",
+    resolution: "",
+  });
 
   const handleBackClick = () => {
     router.push("/home");
   };
   const handleChange = (key: keyof typeof formData, value: string) => {
     setFormData((prev) => ({ ...prev, [key]: value }));
+    setFormErrors((prev) => ({ ...prev, [key]: "" }));
   };
 
   const handleSubmit = async () => {
     const { limit, resolution } = formData;
+
+    const limitError = isValidMaxAmount(limit);
+    const resolutionError = isVaildResolution(resolution);
+
+    if (limitError || resolutionError) {
+      setFormErrors({
+        limit: limitError || "",
+        resolution: resolutionError || "",
+      });
+      return;
+    }
+    setFormErrors({
+      limit: "",
+      resolution: "",
+    });
 
     const {
       data: { user },
@@ -35,6 +59,7 @@ export default function MonthlyLimit() {
       return;
     }
     console.log("데이터 업로드 성공", formData);
+    router.push("./home");
   };
 
   const date = new Date();
@@ -66,6 +91,11 @@ export default function MonthlyLimit() {
             />
             회
           </div>
+          {formErrors.limit && (
+            <span className="mt-1 text-base font-normal text-red-500">
+              {formErrors.limit}
+            </span>
+          )}
         </div>
         <div className="mb-20 flex flex-col items-center gap-2.5">
           <div className="text-center text-lg">
@@ -76,6 +106,11 @@ export default function MonthlyLimit() {
             onChange={(e) => handleChange("resolution", e.target.value)}
             value={formData.resolution}
           />
+          {formErrors.resolution && (
+            <span className="mt-1 text-base font-normal text-red-500">
+              {formErrors.resolution}
+            </span>
+          )}
         </div>
         <Button size="m" onClick={handleSubmit}>
           목표 등록

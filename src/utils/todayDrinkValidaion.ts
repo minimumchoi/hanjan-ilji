@@ -38,3 +38,19 @@ export const isValidFeeling = (feeling: string) => {
   }
   return;
 };
+
+export const isValidMaxAmount = (limit: string) => {
+  if (typeof limit !== "string" || limit.trim() === "") {
+    return "최대 횟수를 입력해주세요";
+  }
+  const numericlLimit = Number(limit);
+  if (isNaN(numericlLimit) || numericlLimit <= 0) {
+    return "1 이상으로 입력해주세요";
+  }
+};
+
+export const isVaildResolution = (resolution: string) => {
+  if (typeof resolution !== "string" || resolution.trim() === "") {
+    return "짧게라도 남겨볼까요?";
+  }
+};
