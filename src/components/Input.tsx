@@ -42,7 +42,7 @@ export default function Input({
         type={
           type === "email"
             ? "email"
-            : type === "password" || "passwordCheck"
+            : type === "password" || type === "passwordCheck"
               ? "password"
               : "text"
         }
