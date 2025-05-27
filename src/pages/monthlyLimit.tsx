@@ -1,13 +1,14 @@
 import Button from "@/components/Button";
 import DrinkInput from "@/components/DrinkInput";
 import { SVGIcon } from "@/components/SVGIcon";
+import { useUser } from "@/contexts/userContext";
 import { createClient } from "@/utils/supabase/component";
 import {
   isVaildResolution,
   isValidMaxAmount,
 } from "@/utils/todayDrinkValidaion";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function MonthlyLimit() {
   const supabase = createClient();
@@ -17,6 +18,46 @@ export default function MonthlyLimit() {
     limit: "",
     resolution: "",
   });
+  const [isEdit, setIsEdit] = useState(false);
+
+  const { user } = useUser();
+
+  useEffect(() => {
+    const fetchSesstion = async () => {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+
+      console.log(session);
+    };
+    fetchSesstion();
+
+    const fetchMonthlyLimit = async () => {
+      const now = new Date();
+      const currentYear = now.getFullYear();
+      const currentMonth = now.getMonth() + 1;
+
+      const { data, error } = await supabase
+        .from("MonthlyLimit")
+        .select("*")
+        .eq("user_id", user?.id)
+        .eq("year", currentYear)
+        .eq("month", currentMonth)
+        .single();
+
+      if (error) {
+        console.error("데이터 패칭 실패", error);
+        return;
+      }
+      setIsEdit(true);
+      setFormData((prev) => ({
+        ...prev,
+        limit: data.limit,
+        resolution: data.resolution,
+      }));
+    };
+    fetchMonthlyLimit();
+  }, [supabase, user?.id]);
 
   // 뒤로가기 버튼
   const handleBackClick = () => {
@@ -47,22 +88,36 @@ export default function MonthlyLimit() {
       resolution: "",
     });
 
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
+    if (isEdit) {
+      const { error } = await supabase
+        .from("MonthlyLimit")
+        .update({
+          limit,
+          resolution,
+          user_id: user?.id,
+        })
+        .eq("user_id", user?.id);
 
-    const { error } = await supabase.from("MonthlyLimit").insert({
-      limit,
-      resolution,
-      user_id: user?.id,
-    });
+      if (error) {
+        console.error("데이터 업로드 실패", error);
+        return;
+      }
+      console.log("데이터 업로드 성공", formData);
+      router.push("./home");
+    } else {
+      const { error } = await supabase.from("MonthlyLimit").insert({
+        limit,
+        resolution,
+        user_id: user?.id,
+      });
 
-    if (error) {
-      console.error("데이터 업로드 실패", error);
-      return;
+      if (error) {
+        console.error("데이터 업로드 실패", error);
+        return;
+      }
+      console.log("데이터 업로드 성공", formData);
+      router.push("./home");
     }
-    console.log("데이터 업로드 성공", formData);
-    router.push("./home");
   };
 
   // 이번 달
@@ -120,9 +175,15 @@ export default function MonthlyLimit() {
             </span>
           )}
         </div>
-        <Button size="m" onClick={handleSubmit}>
-          목표 등록
-        </Button>
+        {isEdit ? (
+          <Button size="m" onClick={handleSubmit}>
+            목표 수정
+          </Button>
+        ) : (
+          <Button size="m" onClick={handleSubmit}>
+            목표 등록
+          </Button>
+        )}
       </div>
     </div>
   );
