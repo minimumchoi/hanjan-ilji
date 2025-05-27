@@ -1,5 +1,6 @@
 import Button from "@/components/Button";
 import MonthlyProgress from "@/components/MonthlyProgress";
+import { useUser } from "@/contexts/userContext";
 import { createClient } from "@/utils/supabase/server-props";
 import type { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
@@ -40,10 +41,16 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     .gte("created_at", firstDay)
     .lte("created_at", lastDay);
 
+  // 해당 월, 년도
+  const currentYear = now.getFullYear();
+  const currentMonth = now.getMonth() + 1;
+
   const { data: totalLimitData, error: totalLimitError } = await supabase
     .from("MonthlyLimit")
     .select("limit")
     .eq("user_id", user.id)
+    .eq("year", currentYear)
+    .eq("month", currentMonth)
     .single(); //하나만 가져오기 (1개인 경우 편하게 객체로 받아올 수 있음)
 
   const drinkCount = drinkCountError ? 0 : drinkCountData.length;
@@ -78,9 +85,15 @@ export default function Home({ drinkCount, totalLimit }: HomeProp) {
         <Button color="primary" onClick={() => router.push("./todayDrink")}>
           오늘의 한잔 기록하기
         </Button>
-        <Button color="accent" onClick={() => router.push("./monthlyLimit")}>
-          이달의 목표 정하기
-        </Button>
+        {totalLimit ? (
+          <Button color="accent" onClick={() => router.push("./monthlyLimit")}>
+            이달의 목표 수정하기
+          </Button>
+        ) : (
+          <Button color="accent" onClick={() => router.push("./monthlyLimit")}>
+            이달의 목표 정하기
+          </Button>
+        )}
       </div>
     </div>
   );
