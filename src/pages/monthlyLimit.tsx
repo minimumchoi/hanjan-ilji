@@ -18,14 +18,17 @@ export default function MonthlyLimit() {
     resolution: "",
   });
 
+  // 뒤로가기 버튼
   const handleBackClick = () => {
     router.push("/home");
   };
+
   const handleChange = (key: keyof typeof formData, value: string) => {
     setFormData((prev) => ({ ...prev, [key]: value }));
     setFormErrors((prev) => ({ ...prev, [key]: "" }));
   };
 
+  // 제출하기 버튼
   const handleSubmit = async () => {
     const { limit, resolution } = formData;
 
@@ -62,6 +65,7 @@ export default function MonthlyLimit() {
     router.push("./home");
   };
 
+  // 이번 달
   const date = new Date();
   const formattedDate = `${date.getFullYear()}년 ${date.getMonth() + 1}월`;
 
@@ -79,6 +83,8 @@ export default function MonthlyLimit() {
           <div className="text-lg">{formattedDate}</div>
           <h1 className="text-2xl">이달의 목표 🎯 </h1>
         </div>
+
+        {/* 최대 음주 가능 횟수 */}
         <div className="flex flex-col items-center gap-2.5">
           <div className="max-w-44 text-center text-lg">
             이번 달에 마실 수 있는 최대 횟수를 알려주세요!
@@ -97,6 +103,8 @@ export default function MonthlyLimit() {
             </span>
           )}
         </div>
+
+        {/* 이달의 다짐 */}
         <div className="mb-20 flex flex-col items-center gap-2.5">
           <div className="text-center text-lg">
             이번 달 다짐을 한 줄로 적어볼까요?
