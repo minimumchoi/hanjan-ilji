@@ -49,7 +49,7 @@ export const isValidMaxAmount = (limit: string) => {
   }
 };
 
-export const isVaildResolution = (resolution: string) => {
+export const isValidResolution = (resolution: string) => {
   if (typeof resolution !== "string" || resolution.trim() === "") {
     return "짧게라도 남겨볼까요?";
   }

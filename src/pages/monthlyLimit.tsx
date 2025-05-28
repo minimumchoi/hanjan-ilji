@@ -4,62 +4,76 @@ import { SVGIcon } from "@/components/SVGIcon";
 import { useUser } from "@/contexts/userContext";
 import { createClient } from "@/utils/supabase/component";
 import {
-  isVaildResolution,
+  isValidResolution,
   isValidMaxAmount,
 } from "@/utils/todayDrinkValidaion";
+import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { createClient as createServerClient } from "@/utils/supabase/server-props";
 
-export default function MonthlyLimit() {
-  const supabase = createClient();
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const supabase = createServerClient(context);
+
+  const now = new Date();
+  const currentYear = now.getFullYear();
+  const currentMonth = now.getMonth() + 1;
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  const { data, error } = await supabase
+    .from("MonthlyLimit")
+    .select("*")
+    .eq("user_id", user?.id)
+    .eq("year", currentYear)
+    .eq("month", currentMonth)
+    .single();
+
+  if (error?.details === "The result contains 0 rows" || !data) {
+    return {
+      props: {
+        limit: "",
+        resolution: "",
+        isEdit: false,
+      },
+    };
+  }
+
+  return {
+    props: {
+      limit: data.limit ?? "",
+      resolution: data.resolution ?? "",
+      isEdit: true,
+    },
+  };
+}
+
+type MonthlyLimitProp = {
+  limit: number | string;
+  resolution: string;
+  isEdit: boolean;
+};
+
+export default function MonthlyLimit({
+  limit,
+  resolution,
+  isEdit,
+}: MonthlyLimitProp) {
   const router = useRouter();
-  const [formData, setFormData] = useState({ limit: "", resolution: "" });
+  const supabase = createClient();
+  const { user } = useUser();
+
+  const [formData, setFormData] = useState({
+    limit: String(limit),
+    resolution,
+  });
   const [formErrors, setFormErrors] = useState({
     limit: "",
     resolution: "",
   });
-  const [isEdit, setIsEdit] = useState(false);
 
-  const { user } = useUser();
-
-  useEffect(() => {
-    const fetchSesstion = async () => {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
-
-      console.log(session);
-    };
-    fetchSesstion();
-
-    const fetchMonthlyLimit = async () => {
-      const now = new Date();
-      const currentYear = now.getFullYear();
-      const currentMonth = now.getMonth() + 1;
-
-      const { data, error } = await supabase
-        .from("MonthlyLimit")
-        .select("*")
-        .eq("user_id", user?.id)
-        .eq("year", currentYear)
-        .eq("month", currentMonth)
-        .single();
-
-      if (error) {
-        console.error("데이터 패칭 실패", error);
-        return;
-      }
-      setIsEdit(true);
-      setFormData((prev) => ({
-        ...prev,
-        limit: data.limit,
-        resolution: data.resolution,
-      }));
-    };
-    fetchMonthlyLimit();
-  }, [supabase, user?.id]);
-
-  // 뒤로가기 버튼
   const handleBackClick = () => {
     router.push("/home");
   };
@@ -69,12 +83,11 @@ export default function MonthlyLimit() {
     setFormErrors((prev) => ({ ...prev, [key]: "" }));
   };
 
-  // 제출하기 버튼
   const handleSubmit = async () => {
     const { limit, resolution } = formData;
 
     const limitError = isValidMaxAmount(limit);
-    const resolutionError = isVaildResolution(resolution);
+    const resolutionError = isValidResolution(resolution);
 
     if (limitError || resolutionError) {
       setFormErrors({
@@ -83,10 +96,10 @@ export default function MonthlyLimit() {
       });
       return;
     }
-    setFormErrors({
-      limit: "",
-      resolution: "",
-    });
+
+    const now = new Date();
+    const currentYear = now.getFullYear();
+    const currentMonth = now.getMonth() + 1;
 
     if (isEdit) {
       const { error } = await supabase
@@ -96,31 +109,33 @@ export default function MonthlyLimit() {
           resolution,
           user_id: user?.id,
         })
-        .eq("user_id", user?.id);
+        .eq("user_id", user?.id)
+        .eq("year", currentYear)
+        .eq("month", currentMonth);
 
       if (error) {
-        console.error("데이터 업로드 실패", error);
+        console.error("업데이트 실패", error);
         return;
       }
-      console.log("데이터 업로드 성공", formData);
-      router.push("./home");
+      router.push("/home");
     } else {
       const { error } = await supabase.from("MonthlyLimit").insert({
         limit,
         resolution,
         user_id: user?.id,
+        year: currentYear,
+        month: currentMonth,
       });
 
       if (error) {
-        console.error("데이터 업로드 실패", error);
+        console.error("등록 실패", error);
         return;
       }
-      console.log("데이터 업로드 성공", formData);
-      router.push("./home");
+
+      router.push("/home");
     }
   };
 
-  // 이번 달
   const date = new Date();
   const formattedDate = `${date.getFullYear()}년 ${date.getMonth() + 1}월`;
 
@@ -131,7 +146,7 @@ export default function MonthlyLimit() {
         className="cursor-pointer"
         onClick={handleBackClick}
       >
-        <SVGIcon name="back" size={25}></SVGIcon>
+        <SVGIcon name="back" size={25} />
       </button>
       <div className="flex flex-col items-center gap-15">
         <div className="flex flex-col items-center gap-2.5">
@@ -175,15 +190,10 @@ export default function MonthlyLimit() {
             </span>
           )}
         </div>
-        {isEdit ? (
-          <Button size="m" onClick={handleSubmit}>
-            목표 수정
-          </Button>
-        ) : (
-          <Button size="m" onClick={handleSubmit}>
-            목표 등록
-          </Button>
-        )}
+
+        <Button size="m" onClick={handleSubmit}>
+          {isEdit ? "목표 수정" : "목표 등록"}
+        </Button>
       </div>
     </div>
   );
