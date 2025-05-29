@@ -1,17 +1,17 @@
 import type { SVGAttributes } from "react";
 
-export type IconName =
-  | "home"
-  | "calendar"
-  | "food"
-  | "beer"
-  | "arrow"
-  | "return"
-  | "back"
-  | "questionMark";
+// export type IconName =
+//   | "home"
+//   | "calendar"
+//   | "food"
+//   | "beer"
+//   | "arrow"
+//   | "return"
+//   | "back"
+//   | "questionMark";
 
 type SVGIconProp = {
-  name: IconName;
+  name: string;
   size?: number;
 } & SVGAttributes<SVGElement>;
 
