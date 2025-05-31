@@ -6,12 +6,14 @@ export default function ModalList({
   value,
   unit,
 }: ModalListProp) {
-  const flexClass = flex === "col" ? "flex-col" : "flex-row";
+  const flexClass = flex === "col" ? "flex-col gap-3" : "flex-row h-9 gap-4";
 
   return (
-    <li className={`flex ${flexClass} justify-between gap-4 text-lg font-bold`}>
-      <span>{name}</span>
-      <span>
+    <li
+      className={`flex ${flexClass} w-59 justify-between border-b border-b-gray-300 font-bold last:border-b-0`}
+    >
+      <span className="text-base">{name}</span>
+      <span className="text-xl">
         {value}
         {unit}
       </span>
