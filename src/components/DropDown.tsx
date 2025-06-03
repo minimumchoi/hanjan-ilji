@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SVGIcon } from "./SVGIcon";
 import DropDownList from "./DropDownList";
 
@@ -17,6 +17,10 @@ export default function DropDown({
 }: DropBoxProp) {
   const [isOpened, setIsOpened] = useState(false);
   const [name, setName] = useState(value || "선택해주세요");
+
+  useEffect(() => {
+    setName(value || "선택해주세요");
+  }, [value]);
 
   const widthSize = {
     lg: "w-54",

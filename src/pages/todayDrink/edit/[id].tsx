@@ -1,0 +1,285 @@
+import Button from "@/components/Button";
+import DrinkInput from "@/components/DrinkInput";
+import DropDown from "@/components/DropDown";
+import { SVGIcon } from "@/components/SVGIcon";
+import { createClient } from "@/utils/supabase/component";
+import { createClient as createServerClient } from "@/utils/supabase/server-props";
+import {
+  isValidAmount,
+  isValidDrinkType,
+  isValidFeeling,
+  isValidWithWhom,
+} from "@/utils/todayDrinkValidaion";
+import { GetServerSidePropsContext } from "next";
+import { useRouter } from "next/router";
+import { useEffect, useRef, useState } from "react";
+
+const drinkArr = ["소주", "맥주", "막걸리", "위스키", "와인", "직접입력"];
+const todayFeeling = [
+  "매우 좋았어요",
+  "그냥 그랬어요",
+  "스트레스를 받았어요",
+  "조금 우울했어요",
+];
+const drinkUnit = ["잔", "병"];
+
+type TodayDrinkEditProps = {
+  id: string;
+  fetchData: {
+    drinkType: string;
+    amount: number;
+    unit: string;
+    withWhom: string;
+    feeling: string;
+    created_at: string;
+  } | null;
+};
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const { id } = context.query;
+
+  if (!id || typeof id !== "string") {
+    return {
+      notFound: true, // 404 페이지로 표시
+    };
+  }
+
+  const supabase = createServerClient(context);
+
+  const { data, error } = await supabase
+    .from("dailyDrink")
+    .select("*")
+    .eq("id", id)
+    .single();
+
+  if (error) {
+    console.error("데이터를 불러오는 데 실패했습니다:", error);
+    return {
+      props: {
+        id,
+        fetchData: null,
+      },
+    };
+  }
+
+  return {
+    props: {
+      id,
+      fetchData: data,
+    },
+  };
+}
+
+export default function TodayDrinkEdit({ id, fetchData }: TodayDrinkEditProps) {
+  const supabase = createClient();
+  const router = useRouter();
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [fetchDate, setFetchDate] = useState("");
+
+  const [formData, setFormData] = useState({
+    drinkType: "",
+    amount: "",
+    unit: "잔",
+    withWhom: "",
+    feeling: "",
+  });
+  const [formErrors, setFormErrors] = useState({
+    drinkType: "",
+    amount: "",
+    withWhom: "",
+    feeling: "",
+  });
+
+  const [CustomDrinkType, setCustomDrinkType] = useState("");
+
+  useEffect(() => {
+    if (fetchData) {
+      const isCustomDrink = !drinkArr.includes(fetchData.drinkType);
+      setFormData({
+        drinkType: isCustomDrink ? "직접입력" : fetchData.drinkType,
+        amount: String(fetchData.amount),
+        unit: fetchData.unit,
+        withWhom: fetchData.withWhom,
+        feeling: fetchData.feeling,
+      });
+      setFetchDate(fetchData.created_at);
+      if (isCustomDrink) {
+        setCustomDrinkType(fetchData.drinkType);
+      }
+    }
+  }, [fetchData]);
+
+  const handleBackClick = () => {
+    router.push("/home");
+  };
+
+  const handleChange = (key: keyof typeof formData, value: string) => {
+    setFormData((prev) => ({ ...prev, [key]: value }));
+    setFormErrors((prev) => ({ ...prev, [key]: "" }));
+  };
+
+  const handleSubmit = async () => {
+    const { drinkType, amount, unit, withWhom, feeling } = formData;
+
+    const drinkTypeError = isValidDrinkType(drinkType, CustomDrinkType);
+    const amountError = isValidAmount(amount);
+    const withWhomError = isValidWithWhom(withWhom);
+    const feelingError = isValidFeeling(feeling);
+
+    if (drinkTypeError || amountError || withWhomError || feelingError) {
+      setFormErrors({
+        drinkType: drinkTypeError || "",
+        amount: amountError || "",
+        withWhom: withWhomError || "",
+        feeling: feelingError || "",
+      });
+      return;
+    }
+    setFormErrors({
+      drinkType: "",
+      amount: "",
+      withWhom: "",
+      feeling: "",
+    });
+
+    const finalDrinkType =
+      drinkType === "직접입력" ? CustomDrinkType : drinkType;
+
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    const { error } = await supabase
+      .from("dailyDrink")
+      .update({
+        drinkType: finalDrinkType,
+        amount,
+        unit,
+        withWhom,
+        feeling,
+        user_id: user?.id,
+      })
+      .eq("id", id);
+    if (error) {
+      console.error("데이터 업데이트 실패", error);
+      return;
+    }
+    console.log("데이터 업데이트 성공", formData);
+    router.push("/home"); // 성공 후 홈으로 리디렉션
+  };
+  const date = new Date(fetchDate);
+
+  const formattedDate = `${date.getFullYear()}년 ${
+    date.getMonth() + 1
+  }월 ${date.getDate()}일`;
+
+  useEffect(() => {
+    if (formData.drinkType === "직접입력" && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [formData, formData.drinkType]);
+
+  return (
+    <div className="text-text flex flex-col px-9 pt-[8vh] pb-[12vh] font-bold">
+      <button
+        type="button"
+        className="cursor-pointer"
+        onClick={handleBackClick}
+      >
+        <SVGIcon name="back" size={25}></SVGIcon>
+      </button>
+      <div className="flex flex-col items-center gap-9">
+        <div className="flex flex-col items-center gap-2.5">
+          <div className="text-lg">{formattedDate}</div>
+          <h1 className="text-2xl">오늘의 한잔 🍺 </h1>
+        </div>
+
+        {/* 술종류 */}
+        <div className="flex flex-col items-center gap-2.5">
+          <div className="text-lg">어떤 술을 마셨나요?</div>
+          <DropDown
+            width="lg"
+            listArr={drinkArr}
+            value={formData.drinkType}
+            onSelect={(value) => {
+              handleChange("drinkType", value);
+            }}
+          ></DropDown>
+          {formData.drinkType === "직접입력" && (
+            <DrinkInput
+              ref={inputRef}
+              type="text"
+              value={CustomDrinkType}
+              onChange={(e) => setCustomDrinkType(e.target.value)}
+            />
+          )}
+          {formErrors.drinkType && (
+            <span className="mt-1 text-base font-normal text-red-500">
+              {formErrors.drinkType}
+            </span>
+          )}
+        </div>
+
+        {/* 음주량 */}
+        <div className="flex flex-col items-center gap-2.5">
+          <div className="text-lg">얼마나 마셨나요?</div>
+          <div className="flex flex-row gap-5">
+            <DrinkInput
+              type="number"
+              value={formData.amount}
+              onChange={(e) => handleChange("amount", e.target.value)}
+            />
+            <DropDown
+              width="sm"
+              listArr={drinkUnit}
+              value={formData.unit}
+              onSelect={(value) => handleChange("unit", value)}
+            ></DropDown>
+          </div>
+          {formErrors.amount && (
+            <span className="mt-1 text-base font-normal text-red-500">
+              {formErrors.amount}
+            </span>
+          )}
+        </div>
+
+        {/* 음주메이트 */}
+        <div className="flex flex-col items-center gap-2.5">
+          <div className="text-lg">누구와 함께 마셨나요?</div>
+          <div className="flex flex-row gap-5">
+            <DrinkInput
+              type="text"
+              value={formData.withWhom}
+              onChange={(e) => handleChange("withWhom", e.target.value)}
+            />
+          </div>
+          {formErrors.withWhom && (
+            <span className="mt-1 text-base font-normal text-red-500">
+              {formErrors.withWhom}
+            </span>
+          )}
+        </div>
+
+        {/* 감정 기록 */}
+        <div className="flex flex-col items-center gap-2.5">
+          <div className="text-lg">오늘의 기분은 어땠나요?</div>
+          <DropDown
+            onSelect={(value) => handleChange("feeling", value)}
+            width="lg"
+            listArr={todayFeeling}
+            value={formData.feeling}
+          ></DropDown>
+          {formErrors.feeling && (
+            <span className="text-base font-normal text-red-500">
+              {formErrors.feeling}
+            </span>
+          )}
+        </div>
+
+        <Button size="m" onClick={handleSubmit}>
+          기록 수정
+        </Button>
+      </div>
+    </div>
+  );
+}
