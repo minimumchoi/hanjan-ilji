@@ -24,12 +24,16 @@ export type ModalListProp = {
   unit?: DrinkUnitTypes;
 };
 
+export type DrinkData = {
+  feeling: string;
+  drink: string;
+  amount: number;
+  unit: string;
+  id: string;
+  whom: string;
+};
+
 export type DetailedModalProp = {
-  modalRef: RefObject<HTMLDialogElement>;
-  date: Date;
-  drink: DrinkTypes | string;
-  quantity: number;
-  unit: DrinkUnitTypes;
-  who: string;
-  feeling: FeelingTypes;
+  drinkData: DrinkData;
+  onClose: () => void;
 };
