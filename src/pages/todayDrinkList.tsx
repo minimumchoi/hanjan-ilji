@@ -78,6 +78,7 @@ export default function TodayDrinkList({
   const handleCloseDetailed = () => {
     setSelectedDrinkIndex(null);
   };
+  console.log(drinks);
 
   return (
     <div className="relative h-screen w-full bg-gray-300">
@@ -87,26 +88,30 @@ export default function TodayDrinkList({
         <div className="bg-background absolute bottom-0 left-0 flex h-[75vh] w-full flex-col items-center overflow-auto rounded-t-[20px] border-none px-9 pt-4">
           <div className="mb-2 h-1 w-12 rounded-2xl bg-gray-300"></div>
           <ul className="mt-6 flex w-full flex-col items-center justify-center gap-4.5">
-            {drinks.map((d, i) => (
-              <li
-                key={d.id}
-                className="bg-accent flex h-13 w-full items-center rounded-2xl px-7.5 text-lg font-semibold"
-              >
-                <button
-                  type="button"
-                  className="flex h-full w-full cursor-pointer items-center border-none bg-transparent p-0 text-left"
-                  onClick={handleClick(i)}
+            {drinks.length === 0 ? (
+              <span className="flex text-sm">이날의 기록이 없습니다</span>
+            ) : (
+              drinks.map((d, i) => (
+                <li
+                  key={d.id}
+                  className="bg-accent flex h-13 w-full items-center rounded-2xl px-7.5 text-lg font-semibold"
                 >
-                  <span>{feelingMap[d.feeling]}</span>
-                  <span className="ml-3">{d.drink}</span>
-                  <span className="ml-1.5">{d.amount}</span>
-                  <span>{d.unit}</span>
-                  <span className="ml-auto">
-                    <SVGIcon name="return" size={20} />
-                  </span>
-                </button>
-              </li>
-            ))}
+                  <button
+                    type="button"
+                    className="flex h-full w-full cursor-pointer items-center border-none bg-transparent p-0 text-left"
+                    onClick={handleClick(i)}
+                  >
+                    <span>{feelingMap[d.feeling]}</span>
+                    <span className="ml-3">{d.drink}</span>
+                    <span className="ml-1.5">{d.amount}</span>
+                    <span>{d.unit}</span>
+                    <span className="ml-auto">
+                      <SVGIcon name="return" size={20} />
+                    </span>
+                  </button>
+                </li>
+              ))
+            )}
           </ul>
         </div>
       )}
