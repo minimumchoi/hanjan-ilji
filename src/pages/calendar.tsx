@@ -46,6 +46,7 @@ export default function Calendar({ getMonth, getYear, dailyDrinkData }) {
       handleMonth={handleMonth}
       handleDay={handleDay}
       year={getYear}
+      dailyDrinkData={dailyDrinkData}
     />
   );
 }

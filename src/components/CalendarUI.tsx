@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
 
-export default function CalendarUI({ month, handleMonth, handleDay, year }) {
+export default function CalendarUI({
+  month,
+  handleMonth,
+  handleDay,
+  year,
+  dailyDrinkData,
+}) {
   const [dates, setDates] = useState([]);
 
   useEffect(() => {
@@ -35,7 +41,22 @@ export default function CalendarUI({ month, handleMonth, handleDay, year }) {
   };
 
   const daysOfWeek = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
-
+  const getDrinkColorClass = (drinkType: string): string => {
+    switch (drinkType) {
+      case "소주":
+        return "bg-green-500";
+      case "맥주":
+        return "bg-yellow-400";
+      case "막걸리":
+        return "bg-orange-500";
+      case "위스키":
+        return "bg-purple-500";
+      case "와인":
+        return "bg-red-700";
+      default:
+        return "bg-blue-500";
+    }
+  };
   return (
     <div className="p-6 pt-[5vh]">
       <div className="my-5 ml-3 text-2xl font-bold">
@@ -56,28 +77,49 @@ export default function CalendarUI({ month, handleMonth, handleDay, year }) {
       </div>
 
       <div className="grid grid-cols-7">
-        {dates.map((day, index) => (
-          <div
-            key={index}
-            className="flex min-h-[15vh] w-full flex-col items-center gap-2 p-1"
-            onClick={() => handleClickDay(day)}
-          >
+        {dates.map((day, index) => {
+          // 해당 날짜에 해당하는 데이터 필터링
+          const dailyRecords = day
+            ? dailyDrinkData.filter((record) => {
+                const recordDate = new Date(record.created_at);
+                return (
+                  recordDate.getFullYear() === year &&
+                  recordDate.getMonth() + 1 === month &&
+                  recordDate.getDate() === day
+                );
+              })
+            : [];
+
+          return (
             <div
-              className={`items-start text-base ${day ? "text-text cursor-pointer bg-white" : "bg-gray-50 font-normal text-gray-400"} `}
+              key={index}
+              className="flex min-h-[15vh] flex-col items-center gap-2 p-1"
+              onClick={() => handleClickDay(day)}
             >
-              {day}
-            </div>
-            {/* {index === 3 ? (
-              <div className="flex w-full flex-col gap-1">
-                <div className="h-2.5 w-full rounded-md bg-amber-400"></div>
-                <div className="h-2.5 w-full rounded-md bg-amber-400"></div>
-                <div className="h-2.5 w-full rounded-md bg-amber-400"></div>
+              <div
+                className={`items-start text-base ${
+                  day
+                    ? "text-text cursor-pointer bg-white"
+                    : "bg-gray-50 font-normal text-gray-400"
+                } `}
+              >
+                {day}
               </div>
-            ) : (
-              <></>
-            )} */}
-          </div>
-        ))}
+
+              {dailyRecords.length > 0 && (
+                <div className="flex w-full flex-col gap-1">
+                  {dailyRecords.map((record, recordIndex) => (
+                    <div
+                      key={recordIndex}
+                      className={`h-3 w-full rounded-md text-base ${getDrinkColorClass(record.drinkType)}`}
+                      title={`${record.drinkType} ${record.amount}${record.unit}`}
+                    ></div>
+                  ))}
+                </div>
+              )}
+            </div>
+          );
+        })}
       </div>
     </div>
   );
