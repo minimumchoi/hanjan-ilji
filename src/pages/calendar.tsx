@@ -1,25 +1,23 @@
 import React, { useState, useEffect } from "react";
-import { useRouter } from "next/router"; // Next.js를 사용한다고 가정
-
+import { useRouter } from "next/router";
 const Calendar = () => {
   const router = useRouter();
   const [year, setYear] = useState(new Date().getFullYear());
-  const [month, setMonth] = useState(new Date().getMonth() + 1); // 1월은 0이므로 +1
-  const [dates, setDates] = useState([]); // 달력에 표시될 날짜 배열
+  const [month, setMonth] = useState(new Date().getMonth() + 1);
+  const [dates, setDates] = useState([]);
 
   useEffect(() => {
     generateCalendarDates(year, month);
   }, [year, month]);
 
-  // 달력 날짜 생성 함수
   const generateCalendarDates = (currentYear, currentMonth) => {
-    const firstDayOfMonth = new Date(currentYear, currentMonth - 1, 1).getDay(); // 해당 월의 첫 날 요일 (0:일, 6:토)
-    const lastDayOfMonth = new Date(currentYear, currentMonth, 0).getDate(); // 해당 월의 마지막 날짜
+    const firstDayOfMonth = new Date(currentYear, currentMonth - 1, 1).getDay();
+    const lastDayOfMonth = new Date(currentYear, currentMonth, 0).getDate();
 
     const newDates = [];
 
     for (let i = 0; i < firstDayOfMonth; i++) {
-      newDates.push(null); // 빈 칸으로 표시
+      newDates.push(null);
     }
 
     for (let i = 1; i <= lastDayOfMonth; i++) {
@@ -46,19 +44,10 @@ const Calendar = () => {
   const daysOfWeek = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 
   return (
-    <div className="p-6 pt-11">
-      <div className="my-5 text-center">
-        <select value={year} onChange={handleYearChange} className="mr-2 p-2">
-          {Array.from(
-            { length: 10 },
-            (_, i) => new Date().getFullYear() - 5 + i,
-          ).map((y) => (
-            <option key={y} value={y}>
-              {y}년
-            </option>
-          ))}
-        </select>
-        <select value={month} onChange={handleMonthChange} className="p-2">
+    <div className="p-6 pt-[5vh]">
+      <div className="my-5 ml-3 text-2xl font-bold">
+        <span className="mr-2">{year}년</span>
+        <select value={month} onChange={handleMonthChange} className="">
           {Array.from({ length: 12 }, (_, i) => i + 1).map((m) => (
             <option key={m} value={m}>
               {m}월
@@ -77,10 +66,23 @@ const Calendar = () => {
         {dates.map((day, index) => (
           <div
             key={index}
-            className={`flex min-h-30 items-start justify-center border-gray-200 p-1 text-base ${day ? "text-text cursor-pointer bg-white" : "bg-gray-50 font-normal text-gray-400"} `}
-            onClick={() => handleClick(day)}
+            className="flex min-h-[15vh] flex-col items-center gap-2 p-1"
           >
-            {day}
+            <div
+              className={`items-start text-base ${day ? "text-text cursor-pointer bg-white" : "bg-gray-50 font-normal text-gray-400"} `}
+              onClick={() => handleClick(day)}
+            >
+              {day}
+            </div>
+            {/* {index === 3 ? (
+              <div className="flex w-full flex-col gap-1">
+                <div className="h-2.5 w-full rounded-md bg-amber-400"></div>
+                <div className="h-2.5 w-full rounded-md bg-amber-400"></div>
+                <div className="h-2.5 w-full rounded-md bg-amber-400"></div>
+              </div>
+            ) : (
+              <></>
+            )} */}
           </div>
         ))}
       </div>
