@@ -4,6 +4,7 @@ import { createClient as createServerClient } from "@/utils/supabase/server-prop
 import { GetServerSidePropsContext } from "next";
 import { useState } from "react";
 import { DrinkData } from "@/types/propTypes";
+import { useRouter } from "next/router";
 
 type TodayDrinkListProp = {
   dateText: string;
@@ -64,6 +65,7 @@ export default function TodayDrinkList({
   const [selectedDrinkIndex, setSelectedDrinkIndex] = useState<number | null>(
     null,
   );
+  const router = useRouter();
 
   const feelingMap: Record<string, string> = {
     "스트레스를 받았어요": "🤯",
@@ -80,9 +82,16 @@ export default function TodayDrinkList({
   };
   console.log(drinks);
 
+  const handleBack = () => {
+    router.back();
+  };
+
   return (
     <div className="relative h-screen w-full bg-gray-300">
-      <h2 className="pt-[15vh] pl-5 text-[1.375rem] font-bold">{dateText}</h2>
+      {/* <h2 className="pt-[15vh] pl-5 text-[1.375rem] font-bold">{dateText}</h2> */}
+      <div className="pt-[15vh] pb-[5.5vh] pl-5" onClick={handleBack}>
+        <h2 className="text-[1.375rem] font-bold">{dateText}</h2>
+      </div>
       {/* 리스트 */}
       {selectedDrinkIndex === null && (
         <div className="bg-background absolute bottom-0 left-0 flex h-[75vh] w-full flex-col items-center overflow-auto rounded-t-[20px] border-none px-9 pt-4">
