@@ -1,6 +1,6 @@
 import Button from "@/components/Button";
 import MonthlyProgress from "@/components/MonthlyProgress";
-import { useUser } from "@/contexts/userContext";
+import { SVGIcon } from "@/components/SVGIcon";
 import { createClient } from "@/utils/supabase/server-props";
 import type { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
@@ -72,25 +72,59 @@ type HomeProp = {
 export default function Home({ drinkCount, totalLimit }: HomeProp) {
   const router = useRouter();
 
+  const containerClass =
+    totalLimit === 0
+      ? "min-h-screen flex w-full flex-col items-center justify-center gap-8 px-9"
+      : "mt-19 flex w-full flex-col items-center justify-center gap-8 px-9";
+
   return (
-    <div className="mt-19 flex w-full flex-col items-center justify-center gap-8 px-9">
+    <div className={containerClass}>
       <div>
         <span className="text-base font-bold">
           적당히 즐기는 음주 습관 기록장
         </span>
-        <h1 className="text-[2.5rem] font-bold">한잔일지 🍷</h1>
+        <div className="flex h-12 flex-row items-center gap-0.5">
+          <h1 className="h-12 text-[2.5rem] font-bold">한잔일지</h1>
+          <SVGIcon name="beerCheers" size={60} />
+        </div>
       </div>
-      <MonthlyProgress totalLimit={totalLimit} drinkCount={drinkCount} />
-      <div className="flex w-full flex-col gap-4">
-        <Button color="primary" onClick={() => router.push("./todayDrink")}>
-          오늘의 한잔 기록하기
-        </Button>
+      {totalLimit !== 0 && (
+        <MonthlyProgress totalLimit={totalLimit} drinkCount={drinkCount} />
+      )}
+      {totalLimit === 0 && (
+        <div className="mt-15 mb-30">
+          <div className="relative inline-block">
+            {/* 말풍선 본체 */}
+            <div className="text-text flex h-22 w-39 items-center justify-center rounded-xl bg-purple-50 p-3 text-center text-lg font-bold">
+              이달의 목표를 <br />
+              정해주세요
+            </div>
+            {/* 꼬리 */}
+            <div className="absolute top-[100%] left-[70%] -mt-[1px] h-0 w-0 border-x-8 border-t-[10px] border-x-transparent border-t-purple-50"></div>
+            <SVGIcon
+              name="smileBeer"
+              size={80}
+              className="absolute top-[120%] left-[65%] -translate-x-1/2"
+            />{" "}
+          </div>
+        </div>
+      )}
+      <div className="flex w-full flex-col items-center gap-4">
+        {totalLimit !== 0 && (
+          <Button color="primary" onClick={() => router.push("./todayDrink")}>
+            오늘의 한잔 기록하기
+          </Button>
+        )}
         {totalLimit ? (
           <Button color="accent" onClick={() => router.push("./monthlyLimit")}>
             이달의 목표 수정하기
           </Button>
         ) : (
-          <Button color="accent" onClick={() => router.push("./monthlyLimit")}>
+          <Button
+            color="accent"
+            size="m"
+            onClick={() => router.push("./monthlyLimit")}
+          >
             이달의 목표 정하기
           </Button>
         )}
