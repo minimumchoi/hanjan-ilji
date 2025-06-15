@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-type ButtonType = {
+type ButtonProp = {
   size?: "s" | "m" | "l";
   color?: "primary" | "accent";
   children: ReactNode;
@@ -14,7 +14,7 @@ export default function Button({
   children,
   onClick,
   disabled = false,
-}: ButtonType) {
+}: ButtonProp) {
   const BtnSize =
     size === "l"
       ? "h-20 w-full text-2xl"
