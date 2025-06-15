@@ -50,6 +50,13 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     whom: d.withWhom,
   }));
 
+  if (error) {
+    console.error(error);
+    return {
+      notFound: true,
+    };
+  }
+
   return {
     props: {
       dateText: `${year}년 ${month}월 ${day}일`,
