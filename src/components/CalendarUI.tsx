@@ -1,21 +1,30 @@
+import { DrinkData } from "@/types/propTypes";
 import { useEffect, useState } from "react";
+
+type CalendarUIProp = {
+  month: number;
+  year: number;
+  handleMonth: (month: number) => void;
+  handleDay: (year: number, month: number, day: number) => void;
+  monthlyDrinkList: DrinkData[];
+};
 
 export default function CalendarUI({
   month,
   handleMonth,
   handleDay,
   year,
-  dailyDrinkData,
-}) {
-  const [dates, setDates] = useState([]);
+  monthlyDrinkList,
+}: CalendarUIProp) {
+  const [dates, setDates] = useState<(number | null)[]>([]);
 
   useEffect(() => {
     generateCalendarDates(year, month);
   }, [year, month]);
 
-  const generateCalendarDates = (currentYear, currentMonth) => {
-    const firstDayOfMonth = new Date(currentYear, currentMonth - 1, 1).getDay();
-    const lastDayOfMonth = new Date(currentYear, currentMonth, 0).getDate();
+  const generateCalendarDates = (year: number, month: number) => {
+    const firstDayOfMonth = new Date(year, month - 1, 1).getDay();
+    const lastDayOfMonth = new Date(year, month, 0).getDate();
 
     const newDates = [];
 
@@ -30,19 +39,19 @@ export default function CalendarUI({
     setDates(newDates);
   };
 
-  const handleMonthChange = (e) => {
+  const handleMonthChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     handleMonth(parseInt(e.target.value));
   };
 
-  const handleClickDay = (day) => {
+  const handleClickDay = (day: number | null) => {
     if (day) {
       handleDay(year, month, day);
     }
   };
 
   const daysOfWeek = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
-  const getDrinkColorClass = (drinkType: string): string => {
-    switch (drinkType) {
+  const getDrinkColorClass = (drink: string): string => {
+    switch (drink) {
       case "소주":
         return "bg-green-500";
       case "맥주":
@@ -77,11 +86,11 @@ export default function CalendarUI({
       </div>
 
       <div className="grid grid-cols-7">
-        {dates.map((day, index) => {
+        {dates.map((day, idx) => {
           // 해당 날짜에 해당하는 데이터 필터링
           const dailyRecords = day
-            ? dailyDrinkData.filter((record) => {
-                const recordDate = new Date(record.created_at);
+            ? monthlyDrinkList.filter((record) => {
+                const recordDate = new Date(record.created);
                 return (
                   recordDate.getFullYear() === year &&
                   recordDate.getMonth() + 1 === month &&
@@ -92,7 +101,7 @@ export default function CalendarUI({
 
           return (
             <div
-              key={index}
+              key={idx}
               className="flex min-h-[15vh] flex-col items-center gap-2 p-1"
               onClick={() => handleClickDay(day)}
             >
@@ -108,11 +117,10 @@ export default function CalendarUI({
 
               {dailyRecords.length > 0 && (
                 <div className="flex w-full flex-col gap-1">
-                  {dailyRecords.map((record, recordIndex) => (
+                  {dailyRecords.map((record, idx) => (
                     <div
-                      key={recordIndex}
-                      className={`h-3 w-full rounded-md text-base ${getDrinkColorClass(record.drinkType)}`}
-                      title={`${record.drinkType} ${record.amount}${record.unit}`}
+                      key={record.drink + idx}
+                      className={`h-3 w-full rounded-md text-base ${getDrinkColorClass(record.drink)}`}
                     ></div>
                   ))}
                 </div>
