@@ -1,5 +1,3 @@
-import { RefObject } from "react";
-
 export const drinkTypes = ["소주", "맥주", "막걸리", "위스키", "와인"];
 
 export const drinkUnitTypes = ["잔", "병"];
@@ -31,6 +29,7 @@ export type DrinkData = {
   unit: string;
   id: string;
   whom: string;
+  created: string;
 };
 
 export type DetailedModalProp = {
