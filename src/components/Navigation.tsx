@@ -1,13 +1,18 @@
-import { SVGIcon, IconName } from "@/components/SVGIcon";
+import { SVGIcon } from "@/components/SVGIcon";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
 export default function Navigation() {
   const router = useRouter();
+  const currentMonth = new Date().getMonth();
 
-  const navItems: { name: IconName; label: string; href: string }[] = [
+  const navItems: { name: string; label: string; href: string }[] = [
     { name: "home", label: "홈", href: "/home" },
-    { name: "calendar", label: "달력", href: "/calendar" },
+    {
+      name: "calendar",
+      label: "달력",
+      href: `/calendar?month=${currentMonth}`,
+    },
     { name: "food", label: "안주", href: "/food" },
     { name: "beer", label: "마이페이지", href: "/mypage" },
   ];
