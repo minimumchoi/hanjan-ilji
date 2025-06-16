@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 
 export default function Navigation() {
   const router = useRouter();
-  const currentMonth = new Date().getMonth();
+  const currentMonth = new Date().getMonth() + 1;
 
   const navItems: { name: string; label: string; href: string }[] = [
     { name: "home", label: "홈", href: "/home" },
@@ -24,7 +24,7 @@ export default function Navigation() {
     >
       <ul className="flex h-full w-full flex-row">
         {navItems.map((item) => {
-          const isCurrent = router.pathname === item.href;
+          const isCurrent = router.pathname === item.href.split("?")[0];
 
           return (
             <li key={item.name} className="group flex-1">
