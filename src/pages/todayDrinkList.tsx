@@ -5,6 +5,7 @@ import { GetServerSidePropsContext } from "next";
 import { useState } from "react";
 import { DrinkData } from "@/types/propTypes";
 import { useRouter } from "next/router";
+import { createClient } from "@/utils/supabase/component";
 
 type TodayDrinkListProp = {
   dateText: string;
@@ -73,6 +74,8 @@ export default function TodayDrinkList({
     null,
   );
   const router = useRouter();
+  const supabase = createClient();
+  const [drinkList, setDrinkList] = useState(drinks);
 
   const feelingMap: Record<string, string> = {
     "스트레스를 받았어요": "🤯",
@@ -82,6 +85,18 @@ export default function TodayDrinkList({
   };
   const handleClick = (index: number) => () => {
     setSelectedDrinkIndex(index);
+  };
+
+  const handleDelete = async (id: string, callback?: () => void) => {
+    console.log(id);
+    const { error } = await supabase.from("dailyDrink").delete().eq("id", id);
+
+    if (error) {
+      console.error("삭제 실패", error);
+      return;
+    }
+    setDrinkList((prev) => prev.filter((drink) => drink.id !== id));
+    if (callback) callback();
   };
 
   const handleCloseDetailed = () => {
@@ -104,16 +119,16 @@ export default function TodayDrinkList({
         <div className="bg-background absolute bottom-0 left-0 flex h-[75vh] w-full flex-col items-center overflow-auto rounded-t-[20px] border-none px-9 pt-4">
           <div className="mb-2 h-1 w-12 rounded-2xl bg-gray-300"></div>
           <ul className="mt-6 flex w-full flex-col items-center justify-center gap-4.5">
-            {drinks.length === 0 ? (
+            {drinkList.length === 0 ? (
               <span className="flex text-sm">이날의 기록이 없습니다</span>
             ) : (
-              drinks.map((d, i) => (
+              drinkList.map((d, i) => (
                 <li
                   key={d.id}
                   className="bg-accent flex h-13 w-full items-center rounded-2xl px-7.5 text-lg font-semibold"
                 >
-                  <button
-                    type="button"
+                  <div
+                    role="button"
                     className="flex h-full w-full cursor-pointer items-center border-none bg-transparent p-0 text-left"
                     onClick={handleClick(i)}
                   >
@@ -121,10 +136,17 @@ export default function TodayDrinkList({
                     <span className="ml-3">{d.drink}</span>
                     <span className="ml-1.5">{d.amount}</span>
                     <span>{d.unit}</span>
-                    <span className="ml-auto">
-                      <SVGIcon name="return" size={20} />
-                    </span>
-                  </button>
+                    <button
+                      type="button"
+                      className="ml-auto"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDelete(d.id);
+                      }}
+                    >
+                      <SVGIcon name="close" size={15} className="text-text" />
+                    </button>
+                  </div>
                 </li>
               ))
             )}
@@ -134,7 +156,8 @@ export default function TodayDrinkList({
       {selectedDrinkIndex !== null && (
         <DetailedModal
           onClose={handleCloseDetailed}
-          drinkData={drinks[selectedDrinkIndex]}
+          drinkData={drinkList[selectedDrinkIndex]}
+          onDelete={handleDelete}
         />
       )}
     </div>
