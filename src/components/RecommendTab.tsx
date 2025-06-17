@@ -12,8 +12,6 @@ export default function RecommendTab() {
   const filtered = matchedFood.filter((d) => d.drinkType === tab);
   const filteredFood = filtered[0].food;
 
-  console.log(filteredFood);
-
   return (
     <div>
       <ul className="flex flex-row">
