@@ -94,8 +94,8 @@
       <symbol id="close" width="30" height="30" fill="currentColor" viewBox="0 0 30 30">
       <path fill="currentColor" d="M25.932 4.16a1.25 1.25 0 0 0-1.768 0l-9.118 9.119L5.928 4.16a1.25 1.25 0 1 0-1.767 1.767l9.118 9.118-9.118 9.118a1.25 1.25 0 0 0 1.767 1.768l9.118-9.118 9.118 9.118a1.25 1.25 0 1 0 1.768-1.768l-9.118-9.118 9.118-9.118a1.25 1.25 0 0 0 0-1.767Z"/>
     </symbol>
-    <symbol id="trash" width="30" height="30" fill="currentColor" viewBox="0 0 30 30">
-      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M6.25 8.466h5.25m0 0V6.875c0-.69.56-1.25 1.25-1.25h4.5c.69 0 1.25.56 1.25 1.25v1.59m-7 0h7m5.25 0H18.5M8 10.74v9.09c0 2.143 0 3.215.683 3.88.684.666 1.784.666 3.984.666h4.666c2.2 0 3.3 0 3.984-.666.683-.665.683-1.737.683-3.88v-9.09m-10.5 2.27v6.819M15 13.01v6.819m3.5-6.819v6.819"/>
+     <symbol id="trash" width="30" height="30" fill="none" viewBox="0 0 30 30">
+      <path stroke="#464455" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6.25 8.466h5.25m0 0V6.875c0-.69.56-1.25 1.25-1.25h4.5c.69 0 1.25.56 1.25 1.25v1.59m-7 0h7m5.25 0H18.5M8 10.74v9.09c0 2.143 0 3.215.683 3.88.684.666 1.784.666 3.984.666h4.666c2.2 0 3.3 0 3.984-.666.683-.665.683-1.737.683-3.88v-9.09m-10.5 2.27v6.819M15 13.01v6.819m3.5-6.819v6.819"/>
     </symbol>
     <symbol id="edit" width="30" height="30" fill="currentColor" viewBox="0 0 30 30">
       <path fill="currentColor" d="M29.044 13.688h-2.175v11.906H3.13V6.15H15v-2.4H3.131a2.269 2.269 0 0 0-2.193 2.4v19.444a2.269 2.269 0 0 0 2.193 2.343H26.87a2.268 2.268 0 0 0 2.194-2.343l-.02-11.907Z"/>
