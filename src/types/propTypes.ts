@@ -35,4 +35,5 @@ export type DrinkData = {
 export type DetailedModalProp = {
   drinkData: DrinkData;
   onClose: () => void;
+  onDelete: (id: string, callback?: () => void) => Promise<void>;
 };
