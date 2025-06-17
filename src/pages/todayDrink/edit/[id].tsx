@@ -110,7 +110,7 @@ export default function TodayDrinkEdit({ id, fetchData }: TodayDrinkEditProps) {
   }, [fetchData]);
 
   const handleBackClick = () => {
-    router.push("/home");
+    router.back();
   };
 
   const handleChange = (key: keyof typeof formData, value: string) => {
@@ -165,7 +165,7 @@ export default function TodayDrinkEdit({ id, fetchData }: TodayDrinkEditProps) {
       return;
     }
     console.log("데이터 업데이트 성공", formData);
-    router.push("/home"); // 성공 후 홈으로 리디렉션
+    router.back();
   };
   const date = new Date(fetchDate);
 
