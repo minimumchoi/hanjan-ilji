@@ -43,7 +43,9 @@ export default function MonthlyProgress({
         🍺 지금까지 🍺
         <div className="text-2xl">{drinkCount}회</div>
       </div>
-      <ProgressBar value={drinkCount} max={totalLimit} />
+      <div className="w-70">
+        <ProgressBar value={drinkCount} max={totalLimit} />
+      </div>
       <div className="text-text w-60 text-center text-lg font-bold">
         {randomMessage.includes("<br/>") ? (
           randomMessage.split("<br/>").map((line, idx) => (

@@ -9,7 +9,7 @@ export default function ProgressBar({ max, value }: ProgressBarProp) {
       <progress
         max={max}
         value={value}
-        className="[&::-webkit-progress-value]:bg-primary h-3 w-70 rounded-xl [&::-webkit-progress-bar]:rounded-xl [&::-webkit-progress-bar]:bg-purple-100 [&::-webkit-progress-value]:rounded-xl"
+        className="[&::-webkit-progress-value]:bg-primary h-3 w-full rounded-xl [&::-webkit-progress-bar]:rounded-xl [&::-webkit-progress-bar]:bg-purple-100 [&::-webkit-progress-value]:rounded-xl"
       />
     </div>
   );
