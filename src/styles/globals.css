@@ -1,14 +1,21 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #a594f9;
+  --color-primary: #a78bfa;
   --color-purple-100: #d2cdf6;
   --color-purple-50: #e3dffd;
   --color-accent: #fff0c2;
+  --color-yellow-50: #fff5d4;
   --color-background: #fffdf9;
   --color-gray-300: #c1c1c1;
   --color-gray-100: #f5f5f5;
+  --color-gray-50: #d9d9d9;
   --color-white: #ffffff;
+
   --color-text: #3a3a3a;
   --font-pretendard: var(--font-pretendard), "sans-serif";
+}
+
+dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
 }
