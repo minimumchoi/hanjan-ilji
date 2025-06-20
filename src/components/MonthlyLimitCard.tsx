@@ -48,7 +48,7 @@ export default function MonthlyLimitCard({
           onClick={handleClick}
           className="flex w-full cursor-pointer flex-row items-center justify-center rounded-2xl bg-yellow-50 px-8 py-6"
         >
-          <span className="text-base font-bold">이달의 목표 정하러 가기</span>
+          <div className="text-base font-bold">이달의 목표 정하러 가기</div>
           <SVGIcon name="arrow" size={25} className="rotate-270" />
         </button>
       )}
