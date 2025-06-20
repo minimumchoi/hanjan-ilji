@@ -116,14 +116,17 @@ export default function Home({ drinkCount, totalLimit }: HomeProp) {
           </Button>
         )}
         {totalLimit ? (
-          <Button color="accent" onClick={() => router.push("./monthlyLimit")}>
+          <Button
+            color="accent"
+            onClick={() => router.push("./monthlyLimit/edit")}
+          >
             이달의 목표 수정하기
           </Button>
         ) : (
           <Button
             color="accent"
             size="m"
-            onClick={() => router.push("./monthlyLimit")}
+            onClick={() => router.push("./monthlyLimit/edit")}
           >
             이달의 목표 정하기
           </Button>

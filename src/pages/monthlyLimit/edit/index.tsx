@@ -1,7 +1,6 @@
 import Button from "@/components/Button";
 import DrinkInput from "@/components/DrinkInput";
 import { SVGIcon } from "@/components/SVGIcon";
-import { useUser } from "@/contexts/userContext";
 import { createClient } from "@/utils/supabase/component";
 import {
   isValidResolution,
@@ -11,6 +10,7 @@ import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { createClient as createServerClient } from "@/utils/supabase/server-props";
+import type { User } from "@supabase/supabase-js";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const supabase = createServerClient(context);
@@ -46,6 +46,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       limit: data.limit ?? "",
       resolution: data.resolution ?? "",
       isEdit: true,
+      user: user,
     },
   };
 }
@@ -54,16 +55,17 @@ type MonthlyLimitProp = {
   limit: number | string;
   resolution: string;
   isEdit: boolean;
+  user: User;
 };
 
 export default function MonthlyLimit({
   limit,
   resolution,
   isEdit,
+  user,
 }: MonthlyLimitProp) {
   const router = useRouter();
   const supabase = createClient();
-  const { user } = useUser();
 
   const [formData, setFormData] = useState({
     limit: String(limit),
@@ -75,9 +77,10 @@ export default function MonthlyLimit({
   });
 
   const handleBackClick = () => {
-    router.push("/home");
+    router.back();
   };
 
+  console.log(user);
   const handleChange = (key: keyof typeof formData, value: string) => {
     setFormData((prev) => ({ ...prev, [key]: value }));
     setFormErrors((prev) => ({ ...prev, [key]: "" }));
@@ -107,7 +110,6 @@ export default function MonthlyLimit({
         .update({
           limit,
           resolution,
-          user_id: user?.id,
         })
         .eq("user_id", user?.id)
         .eq("year", currentYear)
@@ -117,7 +119,7 @@ export default function MonthlyLimit({
         console.error("업데이트 실패", error);
         return;
       }
-      router.push("/home");
+      router.back();
     } else {
       const { error } = await supabase.from("MonthlyLimit").insert({
         limit,
@@ -132,7 +134,7 @@ export default function MonthlyLimit({
         return;
       }
 
-      router.push("/home");
+      router.back();
     }
   };
 
