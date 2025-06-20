@@ -42,7 +42,7 @@ export default function TodayDrink() {
   const [CustomDrinkType, setCustomDrinkType] = useState("");
 
   const handleBackClick = () => {
-    router.push("/home");
+    router.back();
   };
 
   const handleChange = (key: keyof typeof formData, value: string) => {
@@ -97,7 +97,7 @@ export default function TodayDrink() {
       return;
     }
     console.log("데이터 업로드 성공", formData);
-    router.push("./home");
+    router.back();
   };
 
   const date = new Date();
