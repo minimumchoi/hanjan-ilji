@@ -33,7 +33,7 @@ export default function MonthlySummaryCard({
           <div className="flex h-7 flex-row items-center justify-between">
             <div className="mr-2 text-[15px]">총 음주 횟수</div>
             <div className="w-25 text-center text-lg font-bold">
-              {totalDrinkCount}
+              {totalDrinkCount}회
             </div>
           </div>
           <div className="flex h-7 flex-row items-center justify-between">
