@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { SVGIcon } from "./SVGIcon";
 
 const segmentCount = 6;
-const colors = ["#a78bfa", "#fff0c2"]; // 보라, 연노랑
+const colors = ["#a78bfa", "#fff5d4"];
 
 type Props = {
   shouldSpin: boolean;
