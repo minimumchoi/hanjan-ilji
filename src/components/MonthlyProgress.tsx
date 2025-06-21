@@ -34,19 +34,19 @@ export default function MonthlyProgress({
   }, [drinkCount, totalLimit]);
 
   return (
-    <section className="flex w-86 flex-col items-center gap-6 rounded-2xl bg-purple-50 pt-9 pb-12">
-      <div className="text-text h-16 w-49 text-center text-xl font-bold">
+    <section className="flex w-full flex-col items-center gap-6 rounded-2xl bg-purple-50 pt-9 pb-9">
+      <div className="text-text h-16 w-49 text-center text-xl font-semibold">
         🔥 이번 달 허용량 🔥
         <div className="text-2xl">{totalLimit}회</div>
       </div>
-      <div className="text-text h-16 w-49 text-center text-xl font-bold">
+      <div className="text-text h-16 w-49 text-center text-xl font-semibold">
         🍺 지금까지 🍺
         <div className="text-2xl">{drinkCount}회</div>
       </div>
-      <div className="w-70">
+      <div className="w-65">
         <ProgressBar value={drinkCount} max={totalLimit} />
       </div>
-      <div className="text-text w-60 text-center text-lg font-bold">
+      <div className="text-text w-60 text-center text-lg font-semibold">
         {randomMessage.includes("<br/>") ? (
           randomMessage.split("<br/>").map((line, idx) => (
             <span key={idx}>
