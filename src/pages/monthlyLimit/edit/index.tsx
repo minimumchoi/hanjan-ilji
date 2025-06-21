@@ -37,6 +37,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         limit: "",
         resolution: "",
         isEdit: false,
+        user: user,
       },
     };
   }
@@ -75,12 +76,12 @@ export default function MonthlyLimit({
     limit: "",
     resolution: "",
   });
+  const [disabled, setDisabled] = useState(false);
 
   const handleBackClick = () => {
     router.back();
   };
 
-  console.log(user);
   const handleChange = (key: keyof typeof formData, value: string) => {
     setFormData((prev) => ({ ...prev, [key]: value }));
     setFormErrors((prev) => ({ ...prev, [key]: "" }));
@@ -114,9 +115,11 @@ export default function MonthlyLimit({
         .eq("user_id", user?.id)
         .eq("year", currentYear)
         .eq("month", currentMonth);
+      setDisabled(true);
 
       if (error) {
         console.error("업데이트 실패", error);
+        setDisabled(false);
         return;
       }
       router.back();
@@ -128,9 +131,10 @@ export default function MonthlyLimit({
         year: currentYear,
         month: currentMonth,
       });
-
+      setDisabled(true);
       if (error) {
         console.error("등록 실패", error);
+        setDisabled(false);
         return;
       }
 
@@ -193,7 +197,7 @@ export default function MonthlyLimit({
           )}
         </div>
 
-        <Button size="m" onClick={handleSubmit}>
+        <Button size="m" onClick={handleSubmit} disabled={disabled}>
           {isEdit ? "목표 수정" : "목표 등록"}
         </Button>
       </div>
