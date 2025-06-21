@@ -1,5 +1,6 @@
 import { matchedFood } from "@/data/food";
 import { useState } from "react";
+import { SVGIcon } from "./SVGIcon";
 
 export default function RecommendTab() {
   const drinkArr = ["소주", "맥주", "위스키", "와인"];
@@ -7,7 +8,7 @@ export default function RecommendTab() {
   const [showCount, setShowCount] = useState(3);
 
   const tabStyle =
-    "text-text flex h-10 w-22 items-center justify-center rounded-t-xl text-lg font-bold cursor-pointer";
+    "text-text flex h-10 w-22 items-center justify-center rounded-t-xl text-lg font-semibold cursor-pointer";
 
   const filtered = matchedFood.filter((d) => d.drinkType === tab);
   const filteredFood = filtered[0].food;
@@ -33,20 +34,21 @@ export default function RecommendTab() {
         {filteredFood.slice(0, showCount).map((d) => (
           <article className="flex w-73 flex-row gap-5" key={d.name}>
             <div className="h-25 w-25 rounded-lg bg-purple-400"></div>
-            <div className="text-text flex w-43 flex-1 flex-col justify-between text-start font-bold">
-              <div className="h-6 text-xl">{d.name}</div>
-              <div className="h-16 text-[0.8125rem]">{d.description} </div>
+            <div className="text-text flex w-43 flex-1 flex-col justify-between text-start">
+              <div className="h-6 text-lg font-bold">{d.name}</div>
+              <div className="h-16 text-sm">{d.description} </div>
             </div>
           </article>
         ))}
         {showCount < filteredFood.length && (
           <button
-            className="text-text mt-3 cursor-pointer text-sm font-bold"
+            className="text-text mt-3 flex cursor-pointer items-center gap-1 text-sm font-semibold"
             onClick={() => {
               setShowCount((prev) => prev + 3);
             }}
           >
             다른 추천 안주 더 보기
+            <SVGIcon name="arrow" className="" size={20} />
           </button>
         )}
       </div>
