@@ -1,5 +1,4 @@
 import { RefObject } from "react";
-import { SVGIcon } from "./SVGIcon";
 
 type RuletModalProp = {
   modalRef: RefObject<HTMLDialogElement | null>;
@@ -19,13 +18,13 @@ export default function RouletteModal({
   return (
     <dialog
       ref={modalRef}
-      className="fixed top-1/2 left-1/2 h-98 w-78 -translate-x-1/2 -translate-y-1/2 rounded-xl bg-white font-bold backdrop:bg-gray-300"
+      className="absolute top-1/4 mx-auto h-98 w-78 rounded-xl bg-white font-bold backdrop:bg-gray-300"
     >
       <div className="text-text flex h-80 flex-col items-center justify-center gap-4">
-        <h1 className="text-2xl">🎉 오늘의 안주는...! 🎉</h1>
+        <h1 className="text-xl">🎉 오늘의 안주는...! 🎉</h1>
         <div className="h-32 w-32 border-1">{img}</div>
         <div className="text-xl">{food}</div>
-        <div className="h-10 w-49 text-sm">{description}</div>
+        <div className="h-10 w-49 text-sm font-semibold">{description}</div>
       </div>
       <div className="flex h-18 w-full flex-row border-t border-gray-300">
         <button
@@ -33,7 +32,6 @@ export default function RouletteModal({
           className="box-border flex w-39 cursor-pointer flex-row items-center justify-center gap-2 border-r-1 border-gray-300"
           onClick={onClick}
         >
-          <SVGIcon name="return" size={20} />
           <span>다시 돌리기</span>
         </button>
         <button
