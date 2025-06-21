@@ -4,6 +4,26 @@ import Roulette from "@/components/Roulette";
 import { ruletFood } from "@/data/food";
 import RouletteModal from "@/components/RouletteModal";
 import RecommendTab from "@/components/RecommendTab";
+import { createClient } from "@/utils/supabase/server-props";
+import type { GetServerSidePropsContext } from "next";
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const supabase = createClient(context);
+
+  const { data: userData, error: userFetchingError } =
+    await supabase.auth.getUser();
+
+  if (userFetchingError || !userData) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+
+  return { props: {} };
+}
 
 export default function Food() {
   const modalRef = useRef<HTMLDialogElement>(null);
@@ -33,11 +53,9 @@ export default function Food() {
 
   return (
     <div className="text-text relative flex flex-col items-center gap-9">
-      <div className="mt-24 flex flex-col items-center">
+      <div className="mt-24 flex flex-col items-center gap-2">
         <h2 className="text-2xl font-bold">오늘 뭐 먹지?</h2>
-        <span className="text-sm font-bold">
-          다양한 안주를 랜덤으로 추천해드려요 🎲
-        </span>
+        <span className="text-sm">다양한 안주를 랜덤으로 추천해드려요 🎲</span>
       </div>
 
       <Roulette
@@ -61,8 +79,11 @@ export default function Food() {
           onClick={handleReset}
         />
       )}
+      <div className="flex flex-col items-center gap-2">
+        <h2 className="mt-10 text-2xl font-bold">주종별 페어링</h2>
+        <span className="text-sm">어울리는 페어링 조합은 무엇이 있을까요?</span>
+      </div>
 
-      <h2 className="mt-10 text-2xl font-bold">술 종류에 맞는 안주 추천</h2>
       <RecommendTab />
     </div>
   );
