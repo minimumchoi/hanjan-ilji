@@ -48,6 +48,8 @@ export default function TodayDrink() {
     feeling: "",
   });
 
+  const [disabled, setDisabled] = useState(false);
+
   const [CustomDrinkType, setCustomDrinkType] = useState("");
 
   const handleBackClick = () => {
@@ -83,7 +85,7 @@ export default function TodayDrink() {
       withWhom: "",
       feeling: "",
     });
-
+    setDisabled(true);
     // drinkType 직접입력인 경우 구분
     const finalDrinkType =
       drinkType === "직접입력" ? CustomDrinkType : drinkType;
@@ -103,6 +105,7 @@ export default function TodayDrink() {
 
     if (error) {
       console.error("데이터 업로드 실패", error);
+      setDisabled(false);
       return;
     }
     console.log("데이터 업로드 성공", formData);
@@ -216,7 +219,7 @@ export default function TodayDrink() {
           )}
         </div>
 
-        <Button size="m" onClick={handleSubmit}>
+        <Button size="m" onClick={handleSubmit} disabled={disabled}>
           한잔 기록
         </Button>
       </div>

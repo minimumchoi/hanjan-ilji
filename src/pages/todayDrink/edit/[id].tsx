@@ -99,6 +99,8 @@ export default function TodayDrinkEdit({ id, fetchData }: TodayDrinkEditProps) {
     feeling: "",
   });
 
+  const [disabled, setDisabled] = useState(false);
+
   const [CustomDrinkType, setCustomDrinkType] = useState("");
 
   useEffect(() => {
@@ -150,6 +152,7 @@ export default function TodayDrinkEdit({ id, fetchData }: TodayDrinkEditProps) {
       withWhom: "",
       feeling: "",
     });
+    setDisabled(true);
 
     const finalDrinkType =
       drinkType === "직접입력" ? CustomDrinkType : drinkType;
@@ -169,8 +172,10 @@ export default function TodayDrinkEdit({ id, fetchData }: TodayDrinkEditProps) {
         user_id: user?.id,
       })
       .eq("id", id);
+
     if (error) {
       console.error("데이터 업데이트 실패", error);
+      setDisabled(false);
       return;
     }
     console.log("데이터 업데이트 성공", formData);
@@ -285,7 +290,7 @@ export default function TodayDrinkEdit({ id, fetchData }: TodayDrinkEditProps) {
           )}
         </div>
 
-        <Button size="m" onClick={handleSubmit}>
+        <Button size="m" onClick={handleSubmit} disabled={disabled}>
           기록 수정
         </Button>
       </div>
