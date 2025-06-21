@@ -1,11 +1,13 @@
 import MonthlyLimitCard from "@/components/monthlyLimitCard";
 import MonthlySummaryCard from "@/components/MonthlySummaryCard";
 import ProgressBar from "@/components/ProgressBar";
-import { createClient } from "@/utils/supabase/server-props";
+import { createClient } from "@/utils/supabase/component";
+import { createClient as createServerClient } from "@/utils/supabase/server-props";
 import type { GetServerSidePropsContext } from "next";
+import { useRouter } from "next/router";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const supabase = createClient(context);
+  const supabase = createServerClient(context);
 
   const { data: userData, error: userFetchingError } =
     await supabase.auth.getUser();
@@ -67,6 +69,8 @@ type MyPageProps = {
 };
 
 export default function MyPage({ user, drink, limit }: MyPageProps) {
+  const supabase = createClient();
+  const router = useRouter();
   const arr = drink.map((d) => d.drinkType);
 
   const countMap = arr.reduce<Record<string, number>>((acc, cur) => {
@@ -81,14 +85,28 @@ export default function MyPage({ user, drink, limit }: MyPageProps) {
 
   const frequentDrink = mostFrequentItems.join(", ");
 
+  const handleLogOut = async () => {
+    const { error } = await supabase.auth.signOut();
+    router.push("/");
+    console.log(error);
+  };
   return (
     <>
       <div className="text-text mx-12 mt-24 flex flex-col gap-12.5">
-        <div className="">
-          <div className="text-2xl font-bold">{user.name}</div>
+        <div className="flex flex-col">
+          <div className="flex flex-row justify-between">
+            <div className="text-2xl font-bold">{user.name}</div>
+            <button
+              onClick={handleLogOut}
+              className="cursor-pointer px-2 text-sm"
+            >
+              로그아웃
+            </button>
+          </div>
           <div className="text-sm">{user.email}</div>
         </div>
-        <div className="px-2">
+
+        <div className="">
           <div className="text-lg font-bold">이번 달 진행률</div>
           <span className="text-sm">이번 달 목표는 잘 지켜지고 있나요?</span>
           <ProgressBar max={3} value={drink.length} />
