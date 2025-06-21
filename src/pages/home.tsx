@@ -75,7 +75,7 @@ export default function Home({ drinkCount, totalLimit }: HomeProp) {
   const containerClass =
     totalLimit === 0
       ? "min-h-screen flex w-full flex-col items-center justify-center gap-8 px-9"
-      : "mt-19 flex w-full flex-col items-center justify-center gap-8 px-9";
+      : "mt-[12vh] flex w-full flex-col items-center justify-center gap-8 px-9";
 
   return (
     <div className={containerClass}>
@@ -109,7 +109,7 @@ export default function Home({ drinkCount, totalLimit }: HomeProp) {
           </div>
         </div>
       )}
-      <div className="flex w-full flex-col items-center gap-4">
+      <div className="flex w-full flex-col items-center gap-3">
         {totalLimit !== 0 && (
           <Button color="primary" onClick={() => router.push("./todayDrink")}>
             오늘의 한잔 기록하기
