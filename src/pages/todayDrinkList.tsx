@@ -81,7 +81,7 @@ export default function TodayDrinkList({
     "스트레스를 받았어요": "🤯",
     "매우 좋았어요": "😆",
     "그냥 그랬어요": "🙂",
-    "우울했어요": "😢",
+    "조금 우울했어요": "😢",
   };
   const handleClick = (index: number) => () => {
     setSelectedDrinkIndex(index);
