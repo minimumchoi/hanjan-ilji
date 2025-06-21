@@ -62,6 +62,10 @@ export default function CalendarUI({
         return "bg-purple-500";
       case "와인":
         return "bg-red-700";
+      case "사케":
+        return "bg-fuchsia-500";
+      case "하이볼":
+        return "bg-blue-400";
       default:
         return "bg-blue-500";
     }

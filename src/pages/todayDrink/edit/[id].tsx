@@ -14,7 +14,16 @@ import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 
-const drinkArr = ["소주", "맥주", "막걸리", "위스키", "와인", "직접입력"];
+const drinkArr = [
+  "소주",
+  "맥주",
+  "막걸리",
+  "위스키",
+  "와인",
+  "사케",
+  "하이볼",
+  "직접입력",
+];
 const todayFeeling = [
   "매우 좋았어요",
   "그냥 그랬어요",
