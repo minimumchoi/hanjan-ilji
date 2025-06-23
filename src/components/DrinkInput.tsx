@@ -4,7 +4,7 @@ type DrinkInputProp = {
   type: "text" | "number";
   value: number | string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  ref?: RefObject<HTMLDialogElement | null>;
+  ref?: RefObject<HTMLInputElement | null>;
 };
 export default function DrinkInput({
   type,

@@ -1,4 +1,4 @@
-import MonthlyLimitCard from "@/components/monthlyLimitCard";
+import MonthlyLimitCard from "@/components/MonthlyLimitCard";
 import MonthlySummaryCard from "@/components/MonthlySummaryCard";
 import ProgressBar from "@/components/ProgressBar";
 import { createClient } from "@/utils/supabase/component";
