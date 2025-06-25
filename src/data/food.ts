@@ -109,6 +109,7 @@ export const ruletFood: ruletFoodProp[] = [
 type Food = {
   name: string;
   description: string;
+  image: string;
 };
 
 // 술 종류와 해당하는 음식 리스트 타입
@@ -125,28 +126,42 @@ export const matchedFood: MatchedFood[] = [
         name: "삼겹살",
         description:
           "기름지고 구운 맛이 진한 삼겹살은 소주의 기름을 씻어주는 짝꿍",
+        image: "/food/samgyeopsal.webp",
       },
       {
         name: "두부김치",
         description: "매콤하고 새콤한 김치와 담백한 두부 조합, 전통 혼술 안주",
+        image: "/food/dubukimchi.webp",
       },
-      { name: "오징어볶음", description: "매콤하고 쫄깃한 식감이 술맛을 돋움" },
+      {
+        name: "오징어볶음",
+        description: "매콤하고 쫄깃한 식감이 술맛을 돋움",
+        image: "/food/spicy-squid.webp",
+      },
       {
         name: "골뱅이무침",
         description: "새콤달콤한 양념과 쫄깃한 골뱅이, 면 사리와 함께",
+        image: "/food/whelk-muchim.webp",
       },
       {
         name: "감자전",
         description: "바삭하고 고소한 맛이 소주의 쓴맛을 중화시켜줌",
+        image: "/food/potato-jeon.webp",
       },
-      { name: "계란말이", description: "담백하고 간단하지만 든든한 기본 안주" },
+      {
+        name: "계란말이",
+        description: "담백하고 간단하지만 든든한 기본 안주",
+        image: "/food/gyeranmari.webp",
+      },
       {
         name: "매운닭발",
         description: "맵고 쫄깃한 안주로 스트레스를 날리기 좋은 조합",
+        image: "/food/spicy-chicken-feet.webp",
       },
       {
         name: "쥐포구이",
         description: "가볍게 씹는 간식형 안주로 인기 높은 소주 친구",
+        image: "/food/dried-fish.webp",
       },
     ],
   },
@@ -156,34 +171,42 @@ export const matchedFood: MatchedFood[] = [
       {
         name: "치킨",
         description: "치맥은 진리 🍗🍺 바삭하고 짭조름한 맛과 궁합 최고",
+        image: "/food/fried-chicken.webp",
       },
       {
         name: "감자튀김",
         description: "짭짤하고 바삭한 감자튀김은 탄산맥주와 찰떡",
+        image: "/food/french-fries.webp",
       },
       {
         name: "피자",
         description: "치즈와 토마토의 고소한 조합이 맥주와 궁합 좋음",
+        image: "/food/pizza.webp",
       },
       {
         name: "소시지 플레이트",
         description: "짭짤한 육즙이 가득한 소시지는 흑맥주와도 잘 어울림",
+        image: "/food/sausage-plate.webp",
       },
       {
         name: "나쵸 & 치즈",
         description: "멕시코 스타일 스낵 + 살사소스, 간단하고 손 쉬운 안주",
+        image: "/food/nacho-cheese.webp",
       },
       {
         name: "치즈스틱",
         description: "겉은 바삭, 속은 고소한 치즈로 맥주와 최고의 궁합",
+        image: "/food/cheese-stick.webp",
       },
       {
         name: "오징어튀김",
         description: "바삭하고 짭조름한 튀김은 시원한 맥주와 찰떡",
+        image: "/food/fried-squid.webp",
       },
       {
         name: "버팔로윙",
         description: "매콤한 양념과 맥주의 시원함이 상반된 매력 조합",
+        image: "/food/buffalo-wings.webp",
       },
     ],
   },
@@ -193,36 +216,44 @@ export const matchedFood: MatchedFood[] = [
       {
         name: "치즈 플래터",
         description: "다양한 치즈와 견과류, 와인의 향과 맛을 풍부하게 살려줌",
+        image: "/food/cheese-platter.webp",
       },
       {
         name: "바게트 + 올리브오일",
         description:
           "심플하지만 품격 있는 곁들임, 특히 화이트 와인과 잘 어울림",
+        image: "/food/baguette-oliveoil.webp",
       },
       {
         name: "살라미 & 하몽",
         description: "짭짤한 육가공 햄류는 레드와인과 고급스럽게 매칭",
+        image: "/food/salami-ham.webp",
       },
       {
         name: "카프레제 샐러드",
         description: "모짜렐라 + 토마토 + 바질 조합으로 상큼하게",
+        image: "/food/caprese.webp",
       },
       {
         name: "과일 플래터",
         description: "포도, 사과, 무화과 등 향긋한 과일로 입안을 정리",
+        image: "/food/fruit-platter.webp",
       },
       {
         name: "훈제연어",
         description: "은은한 훈연 향과 와인의 조화가 깔끔함",
+        image: "/food/smoked-salmon.webp",
       },
       {
         name: "브리치즈 구이",
         description:
           "부드러운 치즈를 구워 꿀을 뿌려 먹으면 디저트 안주로도 훌륭",
+        image: "/food/grilled-brie.webp",
       },
       {
-        name: "가지 오븐구이",
-        description: "레드와인과 잘 어울리는 고소하고 담백한 채소 요리",
+        name: "샥슈카",
+        description: "토마토와 달걀,치증의 조화로운 밸런스",
+        image: "/food/shakshuka.webp",
       },
     ],
   },
@@ -232,34 +263,42 @@ export const matchedFood: MatchedFood[] = [
       {
         name: "다크 초콜릿",
         description: "씁쓸하고 진한 초콜릿이 위스키의 풍미와 어울림",
+        image: "/food/dark-chocolate.webp",
       },
       {
         name: "건과일",
         description: "당분이 높아 위스키의 도수를 부드럽게 감싸줌",
+        image: "/food/dried-fruit.webp",
       },
       {
         name: "견과류 믹스",
         description: "짭조름하고 고소한 맛으로 간단한 위스키 안주로 적합",
+        image: "/food/mixed-nuts.webp",
       },
       {
         name: "블루치즈",
         description: "진한 풍미의 치즈가 위스키의 묵직한 향과 잘 맞음",
+        image: "/food/blue-cheese.webp",
       },
       {
         name: "훈제 치즈",
         description: "훈연향이 위스키의 스모키함과 조화로움",
+        image: "/food/smoked-cheese.webp",
       },
       {
         name: "스테이크 슬라이스",
         description: "육즙이 살아있는 고기 안주는 고도수 위스키와 잘 어울림",
+        image: "/food/steak-slice.webp",
       },
       {
         name: "비프저키",
         description: "짭조름하고 오래 씹는 맛이 위스키와 찰떡",
+        image: "/food/beef-jerky.webp",
       },
       {
         name: "올리브 + 피클",
         description: "입안을 정리해주는 산뜻한 곁들임, 위스키의 뒷맛을 살려줌",
+        image: "/food/olive-pickle.webp",
       },
     ],
   },

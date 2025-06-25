@@ -1,6 +1,7 @@
 import { matchedFood } from "@/data/food";
 import { useState } from "react";
 import { SVGIcon } from "./SVGIcon";
+import Image from "next/image";
 
 export default function RecommendTab() {
   const drinkArr = ["소주", "맥주", "위스키", "와인"];
@@ -33,7 +34,15 @@ export default function RecommendTab() {
       <div className="flex min-h-106 w-88 flex-col items-center gap-3 rounded-b-xl bg-purple-50 py-6">
         {filteredFood.slice(0, showCount).map((d) => (
           <article className="flex w-73 flex-row gap-5" key={d.name}>
-            <div className="h-25 w-25 rounded-lg bg-purple-400"></div>
+            <div className="relative h-25 w-25">
+              <Image
+                src={d.image}
+                alt=""
+                fill
+                className="rounded-lg object-cover"
+              />
+            </div>
+
             <div className="text-text flex w-43 flex-1 flex-col justify-between text-start">
               <div className="h-6 text-lg font-bold">{d.name}</div>
               <div className="h-16 text-sm">{d.description} </div>
