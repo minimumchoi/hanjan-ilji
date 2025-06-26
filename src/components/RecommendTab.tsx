@@ -32,14 +32,16 @@ export default function RecommendTab() {
       </ul>
 
       <div className="flex min-h-106 w-88 flex-col items-center gap-3 rounded-b-xl bg-purple-50 py-6">
-        {filteredFood.slice(0, showCount).map((d) => (
+        {filteredFood.slice(0, showCount).map((d, idx) => (
           <article className="flex w-73 flex-row gap-5" key={d.name}>
             <div className="relative h-25 w-25">
               <Image
                 src={d.image}
-                alt=""
+                alt={`${d.name}사진`}
                 fill
+                sizes="100px"
                 className="rounded-lg object-cover"
+                {...(idx <= 2 ? { priority: true } : {})}
               />
             </div>
 
