@@ -72,7 +72,7 @@ export default function Food() {
 
       {randomIndex !== null && (
         <RouletteModal
-          img=""
+          img={ruletFood[randomIndex].image}
           modalRef={modalRef}
           food={ruletFood[randomIndex].name}
           description={ruletFood[randomIndex].description}

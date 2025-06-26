@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { RefObject } from "react";
 
 type RuletModalProp = {
@@ -18,15 +19,25 @@ export default function RouletteModal({
   return (
     <dialog
       ref={modalRef}
-      className="absolute top-1/4 mx-auto h-98 w-78 rounded-xl bg-white font-bold backdrop:bg-gray-300"
+      className="absolute top-1/4 mx-auto h-98 w-78 rounded-xl bg-white backdrop:bg-gray-300"
     >
       <div className="text-text flex h-80 flex-col items-center justify-center gap-4">
-        <h1 className="text-xl">🎉 오늘의 안주는...! 🎉</h1>
-        <div className="h-32 w-32 border-1">{img}</div>
-        <div className="text-xl">{food}</div>
-        <div className="h-10 w-49 text-sm font-semibold">{description}</div>
+        <h1 className="text-xl font-semibold"> 오늘의 안주는...! </h1>
+        <div className="relative h-32 w-32">
+          <Image
+            src={img}
+            fill
+            alt={`${food}사진`}
+            sizes="128px"
+            className="object-cover"
+          ></Image>
+        </div>
+        <div className="text-xl font-bold">🎉 {food} 🎉</div>
+        <div className="h-10 w-49 text-center text-sm font-semibold">
+          {description}
+        </div>
       </div>
-      <div className="flex h-18 w-full flex-row border-t border-gray-300">
+      <div className="flex h-18 w-full flex-row border-t border-gray-300 font-semibold">
         <button
           type="button"
           className="box-border flex w-39 cursor-pointer flex-row items-center justify-center gap-2 border-r-1 border-gray-300"
