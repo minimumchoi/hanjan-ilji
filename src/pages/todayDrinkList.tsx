@@ -2,7 +2,7 @@ import DetailedModal from "@/components/DetailedModal";
 import { SVGIcon } from "../components/SVGIcon";
 import { createClient as createServerClient } from "@/utils/supabase/server-props";
 import { GetServerSidePropsContext } from "next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DrinkData } from "@/types/propTypes";
 import { useRouter } from "next/router";
 import { createClient } from "@/utils/supabase/component";
@@ -77,6 +77,14 @@ export default function TodayDrinkList({
   const supabase = createClient();
   const [drinkList, setDrinkList] = useState(drinks);
 
+  const [isVisible, setIsVisible] = useState(false);
+
+  const [isGoingBack, setIsGoingBack] = useState(false);
+
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
+
   const feelingMap: Record<string, string> = {
     "스트레스를 받았어요": "🤯",
     "매우 좋았어요": "😆",
@@ -102,21 +110,29 @@ export default function TodayDrinkList({
   const handleCloseDetailed = () => {
     setSelectedDrinkIndex(null);
   };
-  console.log(drinks);
 
   const handleBack = () => {
+    if (isGoingBack) {
+      return;
+    }
+    setIsGoingBack(true);
     router.back();
   };
 
   return (
     <div className="relative h-screen w-full bg-gray-300">
-      {/* <h2 className="pt-[15vh] pl-5 text-[1.375rem] font-bold">{dateText}</h2> */}
       <div className="pt-[15vh] pb-[5.5vh] pl-5" onClick={handleBack}>
         <h2 className="text-[1.375rem] font-bold">{dateText}</h2>
       </div>
       {/* 리스트 */}
       {selectedDrinkIndex === null && (
-        <div className="bg-background absolute bottom-0 left-0 flex h-[75vh] w-full flex-col items-center overflow-auto rounded-t-[20px] border-none px-9 pt-4">
+        <div
+          className={`bg-background absolute bottom-0 left-0 flex h-[75vh] w-full flex-col items-center overflow-auto rounded-t-[20px] border-none px-9 pt-4 transition-all duration-500 ease-out ${
+            isVisible
+              ? "translate-y-0 opacity-100"
+              : "translate-y-full opacity-0"
+          }`}
+        >
           <div className="mb-2 h-1 w-12 rounded-2xl bg-gray-300"></div>
           <ul className="mt-6 flex w-full flex-col items-center justify-center gap-4.5">
             {drinkList.length === 0 ? (
