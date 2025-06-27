@@ -4,13 +4,22 @@ type ProgressBarProp = {
 };
 
 export default function ProgressBar({ max, value }: ProgressBarProp) {
+  const percent = (value / max) * 100;
+
   return (
-    <div className="flex w-full justify-center py-3">
-      <progress
-        max={max}
-        value={value}
-        className="[&::-webkit-progress-value]:bg-primary h-3 w-full rounded-xl [&::-webkit-progress-bar]:rounded-xl [&::-webkit-progress-bar]:bg-purple-100 [&::-webkit-progress-value]:rounded-xl"
-      />
+    <div
+      className="w-full py-3"
+      role="progressbar"
+      aria-valuenow={value}
+      aria-valuemin={0}
+      aria-valuemax={max}
+    >
+      <div className="h-3 w-full overflow-hidden rounded-xl bg-purple-100">
+        <div
+          className="bg-primary h-full rounded-xl transition-all duration-300"
+          style={{ width: `${percent}%` }}
+        />
+      </div>
     </div>
   );
 }
