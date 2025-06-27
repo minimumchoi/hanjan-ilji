@@ -77,8 +77,11 @@ export default function MonthlyLimit({
     resolution: "",
   });
   const [disabled, setDisabled] = useState(false);
+  const [isGoingBack, setIsGoingBack] = useState(false);
 
   const handleBackClick = () => {
+    if (isGoingBack) return;
+    setIsGoingBack(true);
     router.back();
   };
 

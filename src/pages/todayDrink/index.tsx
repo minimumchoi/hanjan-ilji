@@ -52,7 +52,11 @@ export default function TodayDrink() {
 
   const [CustomDrinkType, setCustomDrinkType] = useState("");
 
+  const [isGoingBack, setIsGoingBack] = useState(false);
+
   const handleBackClick = () => {
+    if (isGoingBack) return;
+    setIsGoingBack(true);
     router.back();
   };
 

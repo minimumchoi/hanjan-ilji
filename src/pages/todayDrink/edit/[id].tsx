@@ -101,6 +101,7 @@ export default function TodayDrinkEdit({ id, fetchData }: TodayDrinkEditProps) {
 
   const [disabled, setDisabled] = useState(false);
 
+  const [isGoingBack, setIsGoingBack] = useState(false);
   const [CustomDrinkType, setCustomDrinkType] = useState("");
 
   useEffect(() => {
@@ -121,6 +122,8 @@ export default function TodayDrinkEdit({ id, fetchData }: TodayDrinkEditProps) {
   }, [fetchData]);
 
   const handleBackClick = () => {
+    if (isGoingBack) return;
+    setIsGoingBack(true);
     router.back();
   };
 
