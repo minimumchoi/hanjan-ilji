@@ -90,6 +90,7 @@ export default function MyPage({ user, drink, limit }: MyPageProps) {
     router.push("/");
     console.log(error);
   };
+
   return (
     <>
       <div className="text-text mx-12 mt-24 flex flex-col gap-12.5">
@@ -105,12 +106,14 @@ export default function MyPage({ user, drink, limit }: MyPageProps) {
           </div>
           <div className="text-sm">{user.email}</div>
         </div>
+        {limit && drink.length !== 0 && (
+          <div className="">
+            <div className="text-lg font-bold">이번 달 진행률</div>
+            <span className="text-sm">이번 달 목표는 잘 지켜지고 있나요?</span>
 
-        <div className="">
-          <div className="text-lg font-bold">이번 달 진행률</div>
-          <span className="text-sm">이번 달 목표는 잘 지켜지고 있나요?</span>
-          <ProgressBar max={3} value={drink.length} />
-        </div>
+            <ProgressBar max={limit?.limit} value={drink.length} />
+          </div>
+        )}
         <MonthlyLimitCard
           limit={limit?.limit ?? 0}
           resolution={limit?.resolution ?? ""}
