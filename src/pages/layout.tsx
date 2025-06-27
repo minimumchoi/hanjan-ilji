@@ -25,7 +25,16 @@ export default function Layout({ children }: LayoutProps) {
         <title>한잔일지</title>
         <meta name="description" content="적당히 즐기는 음주 습관 기록장" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta property="og:url" content="https://hanjan-ilji.vercel.app/" />
+        <meta property="og:title" content="한잔일지" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="/preview.png" />
+        <meta
+          property="og:description"
+          content="적당히 즐기는 음주 습관 기록장"
+        />
         <meta charSet="UTF-8" />
+
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div
