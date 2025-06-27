@@ -80,7 +80,7 @@ export default function Home({ drinkCount, totalLimit }: HomeProp) {
   return (
     <div className={containerClass}>
       <div>
-        <span className="text-base font-bold">
+        <span className="text-base font-semibold">
           적당히 즐기는 음주 습관 기록장
         </span>
         <div className="flex h-12 flex-row items-center gap-0.5">
