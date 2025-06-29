@@ -1,19 +1,21 @@
-import { useEffect, useRef, useState } from "react";
 import Button from "@/components/Button";
-import Roulette from "@/components/Roulette";
-import { ruletFood } from "@/data/food";
-import RouletteModal from "@/components/RouletteModal";
 import RecommendTab from "@/components/RecommendTab";
+import Roulette from "@/components/Roulette";
+import RouletteModal from "@/components/RouletteModal";
+import { ruletFood } from "@/data/food";
 import { createClient } from "@/utils/supabase/server-props";
 import type { GetServerSidePropsContext } from "next";
+import { useEffect, useRef, useState } from "react";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const supabase = createClient(context);
 
-  const { data: userData, error: userFetchingError } =
-    await supabase.auth.getUser();
+  const {
+    data: { user },
+    error: userFetchingError,
+  } = await supabase.auth.getUser();
 
-  if (userFetchingError || !userData) {
+  if (userFetchingError || !user) {
     return {
       redirect: {
         destination: "/",

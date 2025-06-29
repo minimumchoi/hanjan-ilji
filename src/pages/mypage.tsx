@@ -9,10 +9,12 @@ import { useRouter } from "next/router";
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const supabase = createServerClient(context);
 
-  const { data: userData, error: userFetchingError } =
-    await supabase.auth.getUser();
+  const {
+    data: { user },
+    error: userFetchingError,
+  } = await supabase.auth.getUser();
 
-  if (userFetchingError || !userData) {
+  if (userFetchingError || !user) {
     return {
       redirect: {
         destination: "/",
@@ -41,7 +43,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   return {
     props: {
-      user: userData.user.user_metadata,
+      user: user.user_metadata,
       drink: drinkData,
       limit: limitData,
     },
