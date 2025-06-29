@@ -2,6 +2,7 @@ import Button from "@/components/Button";
 import DrinkInput from "@/components/DrinkInput";
 import DropDown from "@/components/DropDown";
 import { SVGIcon } from "@/components/SVGIcon";
+import { drinkArr, drinkUnit, todayFeeling } from "@/data/drinkRecord";
 import { createClient } from "@/utils/supabase/component";
 import { createClient as createServerClient } from "@/utils/supabase/server-props";
 import {
@@ -13,24 +14,6 @@ import {
 import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
-
-const drinkArr = [
-  "소주",
-  "맥주",
-  "막걸리",
-  "위스키",
-  "와인",
-  "사케",
-  "하이볼",
-  "직접입력",
-];
-const todayFeeling = [
-  "매우 좋았어요",
-  "그냥 그랬어요",
-  "스트레스를 받았어요",
-  "조금 우울했어요",
-];
-const drinkUnit = ["잔", "병"];
 
 type TodayDrinkEditProps = {
   id: string;
@@ -45,15 +28,29 @@ type TodayDrinkEditProps = {
 };
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const supabase = createServerClient(context);
+
+  const {
+    data: { user },
+    error: userFetchingError,
+  } = await supabase.auth.getUser();
+
+  if (userFetchingError || !user) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+
   const { id } = context.query;
 
   if (!id || typeof id !== "string") {
     return {
-      notFound: true, // 404 페이지로 표시
+      notFound: true,
     };
   }
-
-  const supabase = createServerClient(context);
 
   const { data, error } = await supabase
     .from("dailyDrink")
