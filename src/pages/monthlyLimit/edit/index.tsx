@@ -2,15 +2,14 @@ import Button from "@/components/Button";
 import DrinkInput from "@/components/DrinkInput";
 import { SVGIcon } from "@/components/SVGIcon";
 import { createClient } from "@/utils/supabase/component";
+import { createClient as createServerClient } from "@/utils/supabase/server-props";
 import {
-  isValidResolution,
   isValidMaxAmount,
+  isValidResolution,
 } from "@/utils/todayDrinkValidaion";
 import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { createClient as createServerClient } from "@/utils/supabase/server-props";
-import type { User } from "@supabase/supabase-js";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const supabase = createServerClient(context);
@@ -21,12 +20,22 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   const {
     data: { user },
+    error: userFetchingError,
   } = await supabase.auth.getUser();
+
+  if (userFetchingError || !user) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
 
   const { data, error } = await supabase
     .from("MonthlyLimit")
     .select("*")
-    .eq("user_id", user?.id)
+    .eq("user_id", user.id)
     .eq("year", currentYear)
     .eq("month", currentMonth)
     .single();
@@ -37,7 +46,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         limit: "",
         resolution: "",
         isEdit: false,
-        user: user,
+        user: user.id,
       },
     };
   }
@@ -47,7 +56,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       limit: data.limit ?? "",
       resolution: data.resolution ?? "",
       isEdit: true,
-      user: user,
+      user: user.id,
     },
   };
 }
@@ -56,7 +65,7 @@ type MonthlyLimitProp = {
   limit: number | string;
   resolution: string;
   isEdit: boolean;
-  user: User;
+  user: string;
 };
 
 export default function MonthlyLimit({
@@ -115,7 +124,7 @@ export default function MonthlyLimit({
           limit,
           resolution,
         })
-        .eq("user_id", user?.id)
+        .eq("user_id", user)
         .eq("year", currentYear)
         .eq("month", currentMonth);
       setDisabled(true);
@@ -130,7 +139,7 @@ export default function MonthlyLimit({
       const { error } = await supabase.from("MonthlyLimit").insert({
         limit,
         resolution,
-        user_id: user?.id,
+        user_id: user,
         year: currentYear,
         month: currentMonth,
       });

@@ -10,12 +10,13 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   const {
     data: { user },
+    error: userFetchingError,
   } = await supabase.auth.getUser();
 
-  if (!user) {
+  if (userFetchingError || !user) {
     return {
       redirect: {
-        destination: "/login",
+        destination: "/",
         permanent: false,
       },
     };

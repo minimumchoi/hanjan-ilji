@@ -1,11 +1,11 @@
 import DetailedModal from "@/components/DetailedModal";
-import { SVGIcon } from "../components/SVGIcon";
+import { DrinkData } from "@/types/propTypes";
+import { createClient } from "@/utils/supabase/component";
 import { createClient as createServerClient } from "@/utils/supabase/server-props";
 import { GetServerSidePropsContext } from "next";
-import { useEffect, useState } from "react";
-import { DrinkData } from "@/types/propTypes";
 import { useRouter } from "next/router";
-import { createClient } from "@/utils/supabase/component";
+import { useEffect, useState } from "react";
+import { SVGIcon } from "../components/SVGIcon";
 
 type TodayDrinkListProp = {
   dateText: string;
@@ -14,6 +14,20 @@ type TodayDrinkListProp = {
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const supabase = createServerClient(context);
+
+  const {
+    data: { user },
+    error: userFetchingError,
+  } = await supabase.auth.getUser();
+
+  if (userFetchingError || !user) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
 
   const year = Number(context.query.year);
   const month = Number(context.query.month);
