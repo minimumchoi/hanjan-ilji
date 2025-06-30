@@ -1,5 +1,6 @@
 import { DrinkData } from "@/types/propTypes";
 import { useEffect, useState } from "react";
+import { SVGIcon } from "./SVGIcon";
 
 type CalendarUIProp = {
   month: number;
@@ -17,6 +18,8 @@ export default function CalendarUI({
   monthlyDrinkList,
 }: CalendarUIProp) {
   const [dates, setDates] = useState<(number | null)[]>([]);
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedMonth, setSelectedMonth] = useState(month);
 
   useEffect(() => {
     generateCalendarDates(year, month);
@@ -39,8 +42,9 @@ export default function CalendarUI({
     setDates(newDates);
   };
 
-  const handleMonthChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    handleMonth(parseInt(e.target.value));
+  const handleMonthChange = (month: number) => {
+    setSelectedMonth(month);
+    handleMonth(month);
   };
 
   const handleClickDay = (day: number | null) => {
@@ -72,15 +76,29 @@ export default function CalendarUI({
   };
   return (
     <div className="p-6 pt-[5vh]">
-      <div className="my-5 ml-3 text-2xl font-bold">
+      <div className="my-5 ml-3 flex h-10 flex-row items-center text-2xl font-bold">
         <span className="mr-2">{year}년</span>
-        <select value={month} onChange={handleMonthChange} className="">
-          {Array.from({ length: 12 }, (_, i) => i + 1).map((m) => (
-            <option key={m} value={m}>
-              {m}월
-            </option>
-          ))}
-        </select>
+        <div
+          className="relative flex flex-row items-center gap-1.5"
+          onClick={() => setIsOpen((prev) => !prev)}
+        >
+          {isOpen && (
+            <ul className="absolute top-0 flex w-15 flex-col gap-1.5 rounded-lg bg-gray-100 py-1 text-center text-xl font-semibold">
+              {Array.from({ length: 12 }, (_, i) => i + 1).map((m) => (
+                <li
+                  key={m}
+                  onClick={() => {
+                    handleMonthChange(m);
+                  }}
+                >
+                  {m}월
+                </li>
+              ))}
+            </ul>
+          )}
+          {selectedMonth}월
+          <SVGIcon name="arrow" size={20} />
+        </div>
       </div>
 
       <div className="grid grid-cols-7 pb-2.5 text-center text-[12px] text-gray-400">
