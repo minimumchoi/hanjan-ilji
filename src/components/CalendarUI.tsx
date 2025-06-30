@@ -19,7 +19,6 @@ export default function CalendarUI({
 }: CalendarUIProp) {
   const [dates, setDates] = useState<(number | null)[]>([]);
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedMonth, setSelectedMonth] = useState(month);
 
   useEffect(() => {
     generateCalendarDates(year, month);
@@ -43,7 +42,6 @@ export default function CalendarUI({
   };
 
   const handleMonthChange = (month: number) => {
-    setSelectedMonth(month);
     handleMonth(month);
   };
 
@@ -96,7 +94,7 @@ export default function CalendarUI({
               ))}
             </ul>
           )}
-          {selectedMonth}월
+          {month}월
           <SVGIcon name="arrow" size={20} />
         </div>
       </div>
