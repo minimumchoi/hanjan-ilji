@@ -1,25 +1,25 @@
 import Image from "next/image";
-import { RefObject } from "react";
 
 type RuletModalProp = {
-  modalRef: RefObject<HTMLDialogElement | null>;
   food: string;
   description: string;
   img: string;
-  onClick: () => void;
+  resetClick: () => void;
+  closeClick: () => void;
 };
 
 export default function RouletteModal({
-  modalRef,
   food,
   description,
   img,
-  onClick,
+  resetClick,
+  closeClick,
 }: RuletModalProp) {
   return (
-    <dialog
-      ref={modalRef}
-      className="absolute top-1/4 mx-auto h-98 w-78 rounded-xl bg-white backdrop:bg-gray-300"
+    <div
+      role="dialog"
+      aria-modal="true"
+      className="z-50 w-78 rounded-xl bg-white shadow-lg"
     >
       <div className="text-text flex h-80 flex-col items-center justify-center gap-4">
         <h1 className="text-xl font-semibold"> 오늘의 안주는...! </h1>
@@ -41,18 +41,18 @@ export default function RouletteModal({
         <button
           type="button"
           className="box-border flex w-39 cursor-pointer flex-row items-center justify-center gap-2 border-r-1 border-gray-300"
-          onClick={onClick}
+          onClick={resetClick}
         >
           <span>다시 돌리기</span>
         </button>
         <button
           type="button"
           className="w-39 cursor-pointer"
-          onClick={() => modalRef.current?.close()}
+          onClick={closeClick}
         >
           닫기
         </button>
       </div>
-    </dialog>
+    </div>
   );
 }
