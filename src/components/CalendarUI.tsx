@@ -1,5 +1,5 @@
 import { DrinkData } from "@/types/propTypes";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { SVGIcon } from "./SVGIcon";
 
 type CalendarUIProp = {
@@ -20,9 +20,30 @@ export default function CalendarUI({
   const [dates, setDates] = useState<(number | null)[]>([]);
   const [isOpen, setIsOpen] = useState(false);
 
+  const dropdownRef = useRef<HTMLUListElement>(null);
+
   useEffect(() => {
     generateCalendarDates(year, month);
   }, [year, month]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen]);
 
   const generateCalendarDates = (year: number, month: number) => {
     const firstDayOfMonth = new Date(year, month - 1, 1).getDay();
@@ -72,30 +93,33 @@ export default function CalendarUI({
         return "bg-blue-500";
     }
   };
+
   return (
     <div className="p-6 pt-[5vh]">
       <div className="my-5 ml-3 flex h-10 flex-row items-center text-2xl font-bold">
         <span className="mr-2">{year}년</span>
         <div
-          className="relative flex flex-row items-center gap-1.5"
+          className="relative flex cursor-pointer flex-row items-center gap-1.5"
           onClick={() => setIsOpen((prev) => !prev)}
         >
           {isOpen && (
-            <ul className="absolute top-0 flex w-15 flex-col gap-1.5 rounded-lg bg-gray-100 py-1 text-center text-xl font-semibold">
+            <ul
+              ref={dropdownRef}
+              className="absolute top-10 flex w-15 flex-col gap-2 rounded-lg bg-gray-100 py-2 text-center text-lg font-medium"
+            >
               {Array.from({ length: 12 }, (_, i) => i + 1).map((m) => (
-                <li
-                  key={m}
-                  onClick={() => {
-                    handleMonthChange(m);
-                  }}
-                >
+                <li key={m} onClick={() => handleMonthChange(m)}>
                   {m}월
                 </li>
               ))}
             </ul>
           )}
           {month}월
-          <SVGIcon name="arrow" size={20} />
+          <SVGIcon
+            name="arrow"
+            size={20}
+            className={` ${isOpen && "rotate-180"}`}
+          />
         </div>
       </div>
 
@@ -107,7 +131,6 @@ export default function CalendarUI({
 
       <div className="grid grid-cols-7">
         {dates.map((day, idx) => {
-          // 해당 날짜에 해당하는 데이터 필터링
           const dailyRecords = day
             ? monthlyDrinkList.filter((record) => {
                 const recordDate = new Date(record.created);
@@ -122,18 +145,12 @@ export default function CalendarUI({
           return (
             <div
               key={idx}
-              className="flex min-h-[15vh] flex-col items-center gap-2 p-1"
+              className={`flex min-h-[15vh] flex-col items-center gap-2 p-1 ${
+                day ? "text-text cursor-pointer bg-white" : "text-gray-400"
+              }`}
               onClick={() => handleClickDay(day)}
             >
-              <div
-                className={`items-start text-base ${
-                  day
-                    ? "text-text cursor-pointer bg-white"
-                    : "bg-gray-50 font-normal text-gray-400"
-                } `}
-              >
-                {day}
-              </div>
+              <div className="items-start text-base">{day}</div>
 
               {dailyRecords.length > 0 && (
                 <div className="flex w-full flex-col gap-1">
