@@ -109,7 +109,7 @@ export default function TodayDrinkList({
     setSelectedDrinkIndex(index);
   };
 
-  const handleDelete = async (id: string, callback?: () => void) => {
+  const handleDelete = async (id: string) => {
     console.log(id);
     const { error } = await supabase.from("dailyDrink").delete().eq("id", id);
 
@@ -118,7 +118,7 @@ export default function TodayDrinkList({
       return;
     }
     setDrinkList((prev) => prev.filter((drink) => drink.id !== id));
-    if (callback) callback();
+    setSelectedDrinkIndex(null);
   };
 
   const handleCloseDetailed = () => {

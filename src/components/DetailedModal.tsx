@@ -1,7 +1,6 @@
 import { DetailedModalProp, ModalListProp } from "@/types/propTypes";
-import ModalList from "./ModalList";
-import { useEffect, useRef } from "react";
 import { useRouter } from "next/router";
+import ModalList from "./ModalList";
 import { SVGIcon } from "./SVGIcon";
 
 export default function DetailedModal({
@@ -9,7 +8,6 @@ export default function DetailedModal({
   onClose,
   onDelete,
 }: DetailedModalProp) {
-  const modalRef = useRef<HTMLDialogElement>(null);
   const router = useRouter();
 
   const modalListData: ModalListProp[] = [
@@ -19,29 +17,22 @@ export default function DetailedModal({
     { name: "기분", value: drinkData.feeling, flex: "col" },
   ];
 
-  useEffect(() => {
-    modalRef.current?.showModal();
-  }, []);
-
   const handleDelete = () => {
-    onDelete(drinkData.id, () => {
-      modalRef.current?.close();
-      onClose();
-    });
+    onDelete(drinkData.id);
   };
 
   const handleEdit = () => {
     router.push(`./todayDrink/edit/${drinkData.id}`);
   };
   const handleClose = () => {
-    modalRef.current?.close();
     onClose();
   };
 
   return (
-    <dialog
-      ref={modalRef}
-      className="bg-background fixed top-1/2 left-1/2 h-115 w-83 -translate-x-1/2 -translate-y-1/2 rounded-lg backdrop:bg-gray-300"
+    <div
+      role="dialog"
+      aria-modal="true"
+      className="bg-background absolute top-1/2 left-1/2 z-20 h-115 w-83 -translate-x-1/2 -translate-y-1/2 rounded-lg shadow-lg"
     >
       <div className="text-text flex w-full flex-col items-center justify-center">
         <div className="mt-4 flex w-full flex-row items-stretch justify-between px-4.5">
@@ -79,6 +70,6 @@ export default function DetailedModal({
           <SVGIcon name="edit" size={20} />
         </button>
       </div>
-    </dialog>
+    </div>
   );
 }
