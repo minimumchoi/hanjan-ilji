@@ -1,7 +1,7 @@
 import Button from "@/components/Button";
 import { SVGIcon } from "@/components/SVGIcon";
-import { createClient } from "@/utils/supabase/server-props";
-import type { GetServerSidePropsContext } from "next";
+// import { createClient } from "@/utils/supabase/server-props";
+// import type { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
 
 // export async function getServerSideProps(context: GetServerSidePropsContext) {

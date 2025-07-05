@@ -20,22 +20,22 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   const {
     data: { user },
-    error: userFetchingError,
+    // error: userFetchingError,
   } = await supabase.auth.getUser();
 
-  if (userFetchingError || !user) {
-    return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
-    };
-  }
+  // if (userFetchingError || !user) {
+  //   return {
+  //     redirect: {
+  //       destination: "/",
+  //       permanent: false,
+  //     },
+  //   };
+  // }
 
   const { data, error } = await supabase
     .from("MonthlyLimit")
     .select("*")
-    .eq("user_id", user.id)
+    .eq("user_id", user?.id)
     .eq("year", currentYear)
     .eq("month", currentMonth)
     .single();
@@ -46,7 +46,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         limit: "",
         resolution: "",
         isEdit: false,
-        user: user.id,
+        user: user?.id,
       },
     };
   }
@@ -56,7 +56,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       limit: data.limit ?? "",
       resolution: data.resolution ?? "",
       isEdit: true,
-      user: user.id,
+      user: user?.id,
     },
   };
 }

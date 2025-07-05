@@ -4,7 +4,7 @@ import DropDown from "@/components/DropDown";
 import { SVGIcon } from "@/components/SVGIcon";
 import { drinkArr, drinkUnit, todayFeeling } from "@/data/drinkRecord";
 import { createClient } from "@/utils/supabase/component";
-import { createClient as createServerClient } from "@/utils/supabase/server-props";
+// import { createClient as createServerClient } from "@/utils/supabase/server-props";
 import {
   isValidAmount,
   isValidDrinkType,
