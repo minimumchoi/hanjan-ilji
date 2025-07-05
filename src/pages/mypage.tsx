@@ -43,9 +43,9 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   return {
     props: {
-      user: user?.user_metadata,
-      drink: drinkData,
-      limit: limitData,
+      user: user?.user_metadata || null,
+      drink: drinkData || null,
+      limit: limitData || null,
     },
   };
 }
@@ -98,7 +98,7 @@ export default function MyPage({ user, drink, limit }: MyPageProps) {
       <div className="text-text mx-12 mt-24 flex flex-col gap-12.5">
         <div className="flex flex-col">
           <div className="flex flex-row justify-between">
-            <div className="text-2xl font-bold">{user.name}</div>
+            <div className="text-2xl font-bold">{user?.name}</div>
             <button
               onClick={handleLogOut}
               className="cursor-pointer px-2 text-sm"
@@ -106,7 +106,7 @@ export default function MyPage({ user, drink, limit }: MyPageProps) {
               로그아웃
             </button>
           </div>
-          <div className="text-sm">{user.email}</div>
+          <div className="text-sm">{user?.email}</div>
         </div>
         {limit && drink.length !== 0 && (
           <div className="">
@@ -122,7 +122,7 @@ export default function MyPage({ user, drink, limit }: MyPageProps) {
         />
         <MonthlySummaryCard
           frequentDrink={frequentDrink}
-          totalDrinkCount={drink.length}
+          totalDrinkCount={drink?.length}
         />
       </div>
     </>
