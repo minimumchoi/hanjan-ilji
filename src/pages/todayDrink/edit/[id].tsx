@@ -30,19 +30,19 @@ type TodayDrinkEditProps = {
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const supabase = createServerClient(context);
 
-  const {
-    data: { user },
-    error: userFetchingError,
-  } = await supabase.auth.getUser();
+  // const {
+  //   data: { user },
+  //   error: userFetchingError,
+  // } = await supabase.auth.getUser();
 
-  if (userFetchingError || !user) {
-    return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
-    };
-  }
+  // if (userFetchingError || !user) {
+  //   return {
+  //     redirect: {
+  //       destination: "/",
+  //       permanent: false,
+  //     },
+  //   };
+  // }
 
   const { id } = context.query;
 

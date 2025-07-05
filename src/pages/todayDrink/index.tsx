@@ -11,28 +11,28 @@ import {
   isValidFeeling,
   isValidWithWhom,
 } from "@/utils/todayDrinkValidaion";
-import { GetServerSidePropsContext } from "next";
+// import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const supabase = createServerClient(context);
+// export async function getServerSideProps(context: GetServerSidePropsContext) {
+//   const supabase = createServerClient(context);
 
-  const {
-    data: { user },
-    error: userFetchingError,
-  } = await supabase.auth.getUser();
+//   const {
+//     data: { user },
+//     error: userFetchingError,
+//   } = await supabase.auth.getUser();
 
-  if (userFetchingError || !user) {
-    return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
-    };
-  }
-  return { props: {} };
-}
+//   if (userFetchingError || !user) {
+//     return {
+//       redirect: {
+//         destination: "/",
+//         permanent: false,
+//       },
+//     };
+//   }
+//   return { props: {} };
+// }
 
 export default function TodayDrink() {
   const supabase = createClient();

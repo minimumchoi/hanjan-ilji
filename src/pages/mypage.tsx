@@ -11,17 +11,17 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   const {
     data: { user },
-    error: userFetchingError,
+    // error: userFetchingError,
   } = await supabase.auth.getUser();
 
-  if (userFetchingError || !user) {
-    return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
-    };
-  }
+  // if (userFetchingError || !user) {
+  //   return {
+  //     redirect: {
+  //       destination: "/",
+  //       permanent: false,
+  //     },
+  //   };
+  // }
 
   const currentMonth = new Date().getMonth() + 1;
   const currentYear = new Date().getFullYear();
@@ -43,7 +43,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   return {
     props: {
-      user: user.user_metadata,
+      user: user?.user_metadata,
       drink: drinkData,
       limit: limitData,
     },

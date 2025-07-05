@@ -3,29 +3,29 @@ import RecommendTab from "@/components/RecommendTab";
 import Roulette from "@/components/Roulette";
 import RouletteModal from "@/components/RouletteModal";
 import { ruletFood } from "@/data/food";
-import { createClient } from "@/utils/supabase/server-props";
-import type { GetServerSidePropsContext } from "next";
+// import { createClient } from "@/utils/supabase/server-props";
+// import type { GetServerSidePropsContext } from "next";
 import { useEffect, useState } from "react";
 
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const supabase = createClient(context);
+// export async function getServerSideProps(context: GetServerSidePropsContext) {
+//   const supabase = createClient(context);
 
-  const {
-    data: { user },
-    error: userFetchingError,
-  } = await supabase.auth.getUser();
+//   const {
+//     data: { user },
+//     error: userFetchingError,
+//   } = await supabase.auth.getUser();
 
-  if (userFetchingError || !user) {
-    return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
-    };
-  }
+//   if (userFetchingError || !user) {
+//     return {
+//       redirect: {
+//         destination: "/",
+//         permanent: false,
+//       },
+//     };
+//   }
 
-  return { props: {} };
-}
+//   return { props: {} };
+// }
 
 export default function Food() {
   const [shouldSpin, setShouldSpin] = useState(false);

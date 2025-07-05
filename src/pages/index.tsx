@@ -4,24 +4,24 @@ import { createClient } from "@/utils/supabase/server-props";
 import type { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
 
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const supabase = createClient(context);
+// export async function getServerSideProps(context: GetServerSidePropsContext) {
+//   const supabase = createClient(context);
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+//   const {
+//     data: { user },
+//   } = await supabase.auth.getUser();
 
-  if (user) {
-    return {
-      redirect: {
-        destination: "/home",
-        permanent: false,
-      },
-    };
-  }
+//   if (user) {
+//     return {
+//       redirect: {
+//         destination: "/home",
+//         permanent: false,
+//       },
+//     };
+//   }
 
-  return { props: {} };
-}
+//   return { props: {} };
+// }
 
 export default function Landing({}) {
   const router = useRouter();
