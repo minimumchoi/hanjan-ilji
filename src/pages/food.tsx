@@ -1,11 +1,15 @@
 import Button from "@/components/Button";
-import RecommendTab from "@/components/RecommendTab";
 import Roulette from "@/components/Roulette";
-import RouletteModal from "@/components/RouletteModal";
 import { ruletFood } from "@/data/food";
 // import { createClient } from "@/utils/supabase/server-props";
 // import type { GetServerSidePropsContext } from "next";
 import { useEffect, useState } from "react";
+
+import dynamic from "next/dynamic";
+const RecommendTab = dynamic(() => import("@/components/RecommendTab"));
+const RouletteModal = dynamic(() => import("@/components/RouletteModal"), {
+  ssr: false,
+});
 
 // export async function getServerSideProps(context: GetServerSidePropsContext) {
 //   const supabase = createClient(context);

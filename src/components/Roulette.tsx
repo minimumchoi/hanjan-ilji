@@ -37,12 +37,13 @@ export default function Roulette({ shouldSpin, onSpinEnd }: Props) {
   return (
     <div className="relative h-64 w-64 rounded-full">
       <div
-        className="absolute inset-0 rounded-full transition-transform duration-[3000ms] ease-out"
+        className="absolute inset-0 rounded-full transition-transform duration-[2000ms] ease-out"
         style={{
           transform: `rotate(${rotateDeg}deg)`,
           background: `conic-gradient(${background})`,
         }}
       />
+
       <SVGIcon
         name="questionMark"
         size={80}
