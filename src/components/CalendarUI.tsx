@@ -146,7 +146,7 @@ export default function CalendarUI({
             <div
               key={idx}
               className={`flex min-h-[15vh] flex-col items-center gap-2 p-1 ${
-                day ? "text-text cursor-pointer bg-white" : "text-gray-400"
+                day ? "text-text bg-background cursor-pointer" : "text-gray-400"
               }`}
               onClick={() => handleClickDay(day)}
             >
