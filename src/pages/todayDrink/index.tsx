@@ -213,7 +213,7 @@ export default function TodayDrink() {
 
         {/* 감정 기록 */}
         <div className="flex flex-col items-center gap-2.5">
-          <div className="text-lg">오늘의 기분은 어땠나요?</div>
+          <div className="text-lg">기분은 어땠나요?</div>
           <DropDown
             onSelect={(value) => handleChange("feeling", value)}
             width="lg"
