@@ -19,7 +19,7 @@ export default function Navigation() {
 
   return (
     <nav
-      className="fixed bottom-0 left-0 z-50 h-[3.75rem] w-full max-w-[430px] bg-white"
+      className="fixed bottom-0 left-1/2 z-50 h-[3.75rem] w-full max-w-[430px] -translate-x-1/2 bg-white"
       aria-label="하단메뉴"
     >
       <ul className="flex h-full w-full flex-row">

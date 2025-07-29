@@ -38,10 +38,10 @@ export default function Layout({ children }: LayoutProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div
-        className={`${pretendard.variable} font-pretendard relative min-h-screen`}
+        className={`${pretendard.variable} font-pretendard relative min-h-screen bg-[rgb(246,246,246)]`}
       >
         <main
-          className={`max-w-[430px] ${shouldHideNav ? "" : "pb-[3.75rem]"}`}
+          className={`bg-background mx-auto my-0 h-full min-h-screen max-w-[430px] ${shouldHideNav ? "" : "pb-[3.75rem]"}`}
         >
           {children}
         </main>
