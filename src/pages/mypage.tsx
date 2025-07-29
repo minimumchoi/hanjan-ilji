@@ -95,7 +95,7 @@ export default function MyPage({ user, drink, limit }: MyPageProps) {
 
   return (
     <>
-      <div className="text-text mx-12 mt-24 flex flex-col gap-12.5">
+      <div className="text-text mx-12 flex flex-col gap-12.5 pt-24">
         <div className="flex flex-col">
           <div className="flex flex-row justify-between">
             <div className="text-2xl font-bold">{user?.name}</div>
