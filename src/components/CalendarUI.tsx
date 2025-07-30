@@ -20,7 +20,7 @@ export default function CalendarUI({
   const [dates, setDates] = useState<(number | null)[]>([]);
   const [isOpen, setIsOpen] = useState(false);
 
-  const dropdownRef = useRef<HTMLUListElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     generateCalendarDates(year, month);
@@ -96,17 +96,15 @@ export default function CalendarUI({
 
   return (
     <div className="p-6 pt-[5vh]">
-      <div className="my-5 ml-3 flex h-10 flex-row items-center text-2xl font-bold">
-        <span className="mr-2">{year}년</span>
+      <h2 className="my-5 ml-3 flex h-10 flex-row items-center text-2xl font-bold">
+        <p className="mr-2">{year}년</p>
         <div
+          ref={dropdownRef}
           className="relative flex cursor-pointer flex-row items-center gap-1.5"
           onClick={() => setIsOpen((prev) => !prev)}
         >
           {isOpen && (
-            <ul
-              ref={dropdownRef}
-              className="absolute top-10 flex w-15 flex-col gap-2 rounded-lg bg-gray-100 py-2 text-center text-lg font-medium"
-            >
+            <ul className="absolute top-10 flex w-15 flex-col gap-2 rounded-lg bg-gray-100 py-2 text-center text-lg font-medium">
               {Array.from({ length: 12 }, (_, i) => i + 1).map((m) => (
                 <li key={m} onClick={() => handleMonthChange(m)}>
                   {m}월
@@ -121,7 +119,7 @@ export default function CalendarUI({
             className={` ${isOpen && "rotate-180"}`}
           />
         </div>
-      </div>
+      </h2>
 
       <div className="grid grid-cols-7 pb-2.5 text-center text-[12px] text-gray-400">
         {daysOfWeek.map((day) => (
