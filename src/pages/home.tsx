@@ -1,11 +1,9 @@
 import Button from "@/components/Button";
 import MonthlyProgress from "@/components/MonthlyProgress";
 import { SVGIcon } from "@/components/SVGIcon";
-import { useUser } from "@/contexts/UserContext";
 import { createClient } from "@/utils/supabase/server-props";
 import type { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const supabase = createClient(context);
