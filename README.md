@@ -32,6 +32,78 @@
 
 ---
 
+## **👩‍💻 담당 역할**
+
+**개인 프로젝트로, 기획부터 디자인, 개발까지 전 과정을 스스로 진행했습니다.**
+
+- 전체 서비스 기획 및 UX 플로우 설계 (Figma 활용)
+  <img src="/readme/userFlow.png">
+  <img src="/readme/wireframe.png">
+
+- 데이터 구조 설계
+  <img src="/readme/supabaseSchema.png">
+
+- 프론트엔드 구현 전반 (화면 설계, 상태 관리, 기록 UI 제작)
+
+---
+
+## **💡 배운 점**
+
+- 일관된 디자인과 명확한 사용자 흐름을 만들기 위해 **정보 구조와 인터랙션 설계에 더 많은 시간 투자**의 필요성을 느꼈습니다.
+
+---
+
 ## 🖥️ 주요 화면
+
+- **로그인/회원가입 화면**
+  - 로그인 유효성 검사
+    <img width="300" src="/readme/signIn.gif">
+    <br/>
+  - 회원가입 유효성 검사
+    <img width="300" src="/readme/signUp.gif">
+
+      <br/>
+
+- **홈**
+  - 목표 유무에 따른 UI 분기
+    <img width="300" src="/readme/home.gif">
+    <br/>
+  - 오늘의 한잔 기록 및 이달의 목표 수정
+    <img width="300" src="/readme/home.png">
+
+   <br/>
+
+- **기록 추가 화면**
+  - 유효성 검사
+    <img width="300" src="/readme/todayDrinkForm.gif">
+    <br/>
+
+- **달력**
+  - 주종별 색 분류
+    <img width="300" src="/readme/calendar.png">
+    <br/>
+  - 수정
+    <img width="300" src="/readme/calendar_edit.gif">
+    <br/>
+  - 삭제
+    <img width="300" src="/readme/calendar_delete.gif">
+    <br/>
+- **안주 추천**
+  - 랜덤 추천 (룰렛 UI)
+    <img width="300" src="/readme/roulette.gif">
+    <br/>
+  - 주종별 안주 추천
+    <img width="300" src="/readme/recommendFood.gif">
+    <br/>
+
+- **마이페이지**
+  - 로그아웃
+    <img width="300" src="/readme/signOut.gif">
+    <br/>
+  - 데이터 유무에 따른 UI분기
+    <img width="250" src="/readme/myPage_1.png"> <img width="250" src="/readme/myPage_2.png"> <img width="250" src="/readme/myPage_3.png">
+    <br/>
+  - 이달의 요약 (총 음주 횟수 및 가장 자주 마신 주종 요약)
+    <img width="300" src="/readme/monthlySummary.png">
 
 ---
