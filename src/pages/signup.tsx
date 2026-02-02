@@ -33,8 +33,13 @@ export default function Signup() {
     passwordCheck: true,
     nickName: true,
   });
-  const [hasSubmitted, setHasSubmitted] = useState(false);
   const [ErrorMessage, setErrorMessage] = useState("");
+
+  const handleFocus = (
+    type: "email" | "password" | "passwordCheck" | "nickName",
+  ) => {
+    setValidationStates((prev) => ({ ...prev, [type]: false }));
+  };
 
   const handleBackClick = () => {
     router.push("/");
@@ -42,7 +47,6 @@ export default function Signup() {
 
   // 회원가입 버튼 클릭시 유효성 검사 및 회원가입 처리
   const handleSignUpClick = async () => {
-    setHasSubmitted(true);
     setErrorMessage("");
 
     const emailValid = isValidEmail(formData.email);
@@ -113,7 +117,8 @@ export default function Signup() {
               {d.name}
             </label>
             <Input
-              showValidation={hasSubmitted && validationStates[d.type]}
+              onFocus={() => handleFocus(d.type)}
+              showValidation={validationStates[d.type]}
               labelId={d.type}
               type={d.type}
               onChange={(e) =>
