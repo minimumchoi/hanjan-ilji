@@ -1,6 +1,6 @@
 # 한잔일지 🍶
 
-> 적당히 즐기는 음주 습관 기록 앱
+적당히 즐기는 음주 습관 기록 앱
 
 ---
 
@@ -37,12 +37,16 @@
 **개인 프로젝트로, 기획부터 디자인, 개발까지 전 과정을 스스로 진행했습니다.**
 
 - 전체 서비스 기획 및 UX 플로우 설계 (Figma 활용)
-  <img src="/readme/userFlow.png">
-  <img src="/readme/wireframe.png">
+  <br/>
+  <img width="600" src="/readme/userFlow.png">
+  <img width="600" src="/readme/wireframe.png">
+
+  <br/>
 
 - 데이터 구조 설계
-  <img src="/readme/supabaseSchema.png">
-
+  <br/>
+  <img width="600" src="/readme/supabaseSchema.png">
+  <br/>
 - 프론트엔드 구현 전반 (화면 설계, 상태 관리, 기록 UI 제작)
 
 ---
