@@ -57,53 +57,62 @@
 
 - **로그인/회원가입 화면**
   - 로그인 유효성 검사
+    <br/>
     <img width="300" src="/readme/signIn.gif">
     <br/>
   - 회원가입 유효성 검사
+    <br/>
     <img width="300" src="/readme/signUp.gif">
-
-      <br/>
+    <br/>
 
 - **홈**
   - 목표 유무에 따른 UI 분기
+    <br/>
     <img width="300" src="/readme/home.gif">
     <br/>
   - 오늘의 한잔 기록 및 이달의 목표 수정
+    <br/>
     <img width="300" src="/readme/home.png">
-
-   <br/>
+    <br/>
 
 - **기록 추가 화면**
   - 유효성 검사
+    <br/>
     <img width="300" src="/readme/todayDrinkForm.gif">
     <br/>
 
 - **달력**
   - 주종별 색 분류
+    <br/>
     <img width="300" src="/readme/calendar.png">
     <br/>
   - 수정
+    <br/>
     <img width="300" src="/readme/calendar_edit.gif">
     <br/>
   - 삭제
+    <br/>
     <img width="300" src="/readme/calendar_delete.gif">
     <br/>
 - **안주 추천**
   - 랜덤 추천 (룰렛 UI)
+    <br/>
     <img width="300" src="/readme/roulette.gif">
     <br/>
   - 주종별 안주 추천
+    <br/>
     <img width="300" src="/readme/recommendFood.gif">
     <br/>
 
 - **마이페이지**
   - 로그아웃
+    <br/>
     <img width="300" src="/readme/signOut.gif">
     <br/>
   - 데이터 유무에 따른 UI분기
+    <br/>
     <img width="250" src="/readme/myPage_1.png"> <img width="250" src="/readme/myPage_2.png"> <img width="250" src="/readme/myPage_3.png">
     <br/>
   - 이달의 요약 (총 음주 횟수 및 가장 자주 마신 주종 요약)
+    <br/>
     <img width="300" src="/readme/monthlySummary.png">
-
----
