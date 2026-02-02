@@ -1,9 +1,7 @@
 import Button from "@/components/Button";
 import Roulette from "@/components/Roulette";
 import { ruletFood } from "@/data/food";
-// import { createClient } from "@/utils/supabase/server-props";
-// import type { GetServerSidePropsContext } from "next";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import dynamic from "next/dynamic";
 const RecommendTab = dynamic(() => import("@/components/RecommendTab"));
@@ -11,48 +9,29 @@ const RouletteModal = dynamic(() => import("@/components/RouletteModal"), {
   ssr: false,
 });
 
-// export async function getServerSideProps(context: GetServerSidePropsContext) {
-//   const supabase = createClient(context);
-
-//   const {
-//     data: { user },
-//     error: userFetchingError,
-//   } = await supabase.auth.getUser();
-
-//   if (userFetchingError || !user) {
-//     return {
-//       redirect: {
-//         destination: "/",
-//         permanent: false,
-//       },
-//     };
-//   }
-
-//   return { props: {} };
-// }
-
 export default function Food() {
   const [shouldSpin, setShouldSpin] = useState(false);
   const [randomIndex, setRandomIndex] = useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleSpinClick = () => {
+  const handleSpinClick = useCallback(() => {
     if (shouldSpin) return;
     setShouldSpin(true);
-  };
+  }, [shouldSpin]);
 
-  const handleSpinEnd = () => {
+  const handleSpinEnd = useCallback(() => {
     const index = Math.floor(Math.random() * ruletFood.length);
     setRandomIndex(index);
-  };
+  }, []);
 
-  const handleReset = () => {
+  const handleReset = useCallback(() => {
     setIsModalOpen(false);
     setShouldSpin(true);
-  };
-  const handleClose = () => {
+  }, []);
+
+  const handleClose = useCallback(() => {
     setIsModalOpen(false);
-  };
+  }, []);
 
   useEffect(() => {
     if (randomIndex !== null) {

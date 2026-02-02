@@ -1,4 +1,4 @@
-import { RefObject } from "react";
+import { memo, RefObject } from "react";
 
 type DrinkInputProp = {
   type: "text" | "number";
@@ -6,12 +6,7 @@ type DrinkInputProp = {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   ref?: RefObject<HTMLInputElement | null>;
 };
-export default function DrinkInput({
-  type,
-  onChange,
-  value,
-  ref,
-}: DrinkInputProp) {
+function DrinkInput({ type, onChange, value, ref }: DrinkInputProp) {
   const config = {
     text: {
       placeHolder: "입력해주세요",
@@ -37,3 +32,5 @@ export default function DrinkInput({
     </>
   );
 }
+
+export default memo(DrinkInput);

@@ -14,7 +14,7 @@ export default function DropDownList({
   return (
     <ul
       role="listbox"
-      className={`${width} border-primary absolute top-13 z-10 mt-[3px] overflow-hidden rounded-xl border-3 bg-white shadow-md`}
+      className={`${width} border-primary absolute top-13 z-10 mt-0.75 overflow-hidden rounded-xl border-3 bg-white shadow-md`}
     >
       {listArr.map((list) => (
         <li key={list} role="option" aria-selected={selected === list}>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { SVGIcon } from "./SVGIcon";
 
 const segmentCount = 6;
@@ -9,13 +9,13 @@ type Props = {
   onSpinEnd: () => void;
 };
 
-export default function Roulette({ shouldSpin, onSpinEnd }: Props) {
+function Roulette({ shouldSpin, onSpinEnd }: Props) {
   const [rotateDeg, setRotateDeg] = useState(0);
   const [spinning, setSpinning] = useState(false);
 
   useEffect(() => {
     if (shouldSpin && !spinning) {
-      const extraSpins = 3.5;
+      const extraSpins = 3;
       const totalRotation = 360 * extraSpins;
 
       setSpinning(true);
@@ -24,7 +24,7 @@ export default function Roulette({ shouldSpin, onSpinEnd }: Props) {
       setTimeout(() => {
         setSpinning(false);
         onSpinEnd();
-      }, 3000);
+      }, 2000);
     }
   }, [shouldSpin, spinning, onSpinEnd]);
 
@@ -37,7 +37,7 @@ export default function Roulette({ shouldSpin, onSpinEnd }: Props) {
   return (
     <div className="relative h-64 w-64 rounded-full">
       <div
-        className="absolute inset-0 rounded-full transition-transform duration-[2000ms] ease-out"
+        className="absolute inset-0 rounded-full transition-transform duration-2000 ease-out"
         style={{
           transform: `rotate(${rotateDeg}deg)`,
           background: `conic-gradient(${background})`,
@@ -52,3 +52,5 @@ export default function Roulette({ shouldSpin, onSpinEnd }: Props) {
     </div>
   );
 }
+
+export default memo(Roulette);

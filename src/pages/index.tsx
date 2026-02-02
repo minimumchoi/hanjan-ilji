@@ -1,27 +1,6 @@
 import Button from "@/components/Button";
 import { SVGIcon } from "@/components/SVGIcon";
-// import { createClient } from "@/utils/supabase/server-props";
-// import type { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
-
-// export async function getServerSideProps(context: GetServerSidePropsContext) {
-//   const supabase = createClient(context);
-
-//   const {
-//     data: { user },
-//   } = await supabase.auth.getUser();
-
-//   if (user) {
-//     return {
-//       redirect: {
-//         destination: "/home",
-//         permanent: false,
-//       },
-//     };
-//   }
-
-//   return { props: {} };
-// }
 
 export default function Landing({}) {
   const router = useRouter();

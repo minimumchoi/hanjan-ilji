@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { memo } from "react";
 
 type RuletModalProp = {
   food: string;
@@ -8,7 +9,7 @@ type RuletModalProp = {
   closeClick: () => void;
 };
 
-export default function RouletteModal({
+function RouletteModal({
   food,
   description,
   img,
@@ -40,7 +41,7 @@ export default function RouletteModal({
       <div className="flex h-18 w-full flex-row border-t border-gray-300 font-semibold">
         <button
           type="button"
-          className="box-border flex w-39 cursor-pointer flex-row items-center justify-center gap-2 border-r-1 border-gray-300"
+          className="box-border flex w-39 cursor-pointer flex-row items-center justify-center gap-2 border-r border-gray-300"
           onClick={resetClick}
         >
           <span>다시 돌리기</span>
@@ -56,3 +57,5 @@ export default function RouletteModal({
     </div>
   );
 }
+
+export default memo(RouletteModal);

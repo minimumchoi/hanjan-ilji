@@ -1,26 +1,14 @@
 import Button from "@/components/Button";
 import MonthlyProgress from "@/components/MonthlyProgress";
 import { SVGIcon } from "@/components/SVGIcon";
+import { useUser } from "@/contexts/UserContext";
 import { createClient } from "@/utils/supabase/server-props";
 import type { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const supabase = createClient(context);
-
-  const {
-    data: { user },
-    // error: userFetchingError,
-  } = await supabase.auth.getUser();
-
-  // if (userFetchingError || !user) {
-  //   return {
-  //     redirect: {
-  //       destination: "/",
-  //       permanent: false,
-  //     },
-  //   };
-  // }
 
   const now = new Date();
   // 이달의 첫날
@@ -38,7 +26,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { data: drinkCountData, error: drinkCountError } = await supabase
     .from("dailyDrink")
     .select()
-    .eq("user_id", user?.id)
     .gte("created_at", firstDay)
     .lte("created_at", lastDay);
 
@@ -49,7 +36,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { data: totalLimitData, error: totalLimitError } = await supabase
     .from("MonthlyLimit")
     .select("limit")
-    .eq("user_id", user?.id)
     .eq("year", currentYear)
     .eq("month", currentMonth)
     .single(); //하나만 가져오기 (1개인 경우 편하게 객체로 받아올 수 있음)

@@ -1,9 +1,9 @@
 import { matchedFood } from "@/data/food";
-import { useState } from "react";
+import { memo, useState } from "react";
 import { SVGIcon } from "./SVGIcon";
 import Image from "next/image";
 
-export default function RecommendTab() {
+function RecommendTab() {
   const drinkArr = ["소주", "맥주", "위스키", "와인"];
   const [tab, setTab] = useState(drinkArr[0]);
   const [showCount, setShowCount] = useState(3);
@@ -66,3 +66,5 @@ export default function RecommendTab() {
     </div>
   );
 }
+
+export default memo(RecommendTab);

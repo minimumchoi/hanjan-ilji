@@ -60,6 +60,7 @@ export default function CalendarUI({
     }
 
     setDates(newDates);
+    console.log("generateCalendarDates");
   };
 
   const handleMonthChange = (month: number) => {
@@ -96,7 +97,7 @@ export default function CalendarUI({
 
   return (
     <div className="p-6 pt-[5vh]">
-      <h2 className="my-5 ml-3 flex h-10 flex-row items-center text-2xl font-bold">
+      <h2 className="my-[3vh] ml-3 flex h-10 flex-row items-center text-2xl font-bold">
         <p className="mr-2">{year}년</p>
         <div
           ref={dropdownRef}
@@ -143,7 +144,7 @@ export default function CalendarUI({
           return (
             <div
               key={idx}
-              className={`flex min-h-[15vh] flex-col items-center gap-2 p-1 ${
+              className={`flex min-h-[10vh] flex-col items-center gap-2 p-1 ${
                 day ? "text-text bg-background cursor-pointer" : "text-gray-400"
               }`}
               onClick={() => handleClickDay(day)}

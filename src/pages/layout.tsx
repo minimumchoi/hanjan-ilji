@@ -1,8 +1,8 @@
 import Navigation from "@/components/Navigation";
-import type { ReactNode } from "react";
-import { useRouter } from "next/router";
-import Head from "next/head";
 import localFont from "next/font/local";
+import Head from "next/head";
+import { useRouter } from "next/router";
+import { type ReactNode } from "react";
 
 const pretendard = localFont({
   src: "../fonts/PretendardVariable.woff2",
@@ -41,7 +41,7 @@ export default function Layout({ children }: LayoutProps) {
         className={`${pretendard.variable} font-pretendard relative min-h-screen bg-[rgb(246,246,246)]`}
       >
         <main
-          className={`bg-background mx-auto my-0 h-full min-h-screen max-w-[430px] ${shouldHideNav ? "" : "pb-[3.75rem]"}`}
+          className={`bg-background mx-auto my-0 h-full min-h-screen max-w-107.5 ${shouldHideNav ? "" : "pb-15"}`}
         >
           {children}
         </main>

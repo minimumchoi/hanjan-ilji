@@ -6,6 +6,7 @@ type InputProp = {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   labelId: string;
+  onFocus: () => void;
 };
 
 export default function Input({
@@ -14,6 +15,7 @@ export default function Input({
   value,
   onChange,
   labelId,
+  onFocus,
 }: InputProp) {
   const config = {
     email: {
@@ -46,6 +48,7 @@ export default function Input({
               ? "password"
               : "text"
         }
+        onFocus={onFocus}
         className="focus:border-primary h-12 w-full border-b-3 border-gray-300 p-1.5 text-lg outline-none placeholder:text-base placeholder:text-gray-300"
         placeholder={placeholder}
         value={value}

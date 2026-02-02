@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { memo, ReactNode } from "react";
 
 type ButtonProp = {
   size?: "s" | "m" | "l";
@@ -8,7 +8,7 @@ type ButtonProp = {
   disabled?: boolean;
 };
 
-export default function Button({
+function Button({
   size = "l",
   color = "primary",
   children,
@@ -45,3 +45,5 @@ export default function Button({
     </button>
   );
 }
+
+export default memo(Button);

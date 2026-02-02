@@ -1,6 +1,7 @@
 import MonthlyLimitCard from "@/components/MonthlyLimitCard";
 import MonthlySummaryCard from "@/components/MonthlySummaryCard";
 import ProgressBar from "@/components/ProgressBar";
+import { useUser } from "@/contexts/UserContext";
 import { createClient } from "@/utils/supabase/component";
 import { createClient as createServerClient } from "@/utils/supabase/server-props";
 import type { GetServerSidePropsContext } from "next";
@@ -8,20 +9,6 @@ import { useRouter } from "next/router";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const supabase = createServerClient(context);
-
-  const {
-    data: { user },
-    // error: userFetchingError,
-  } = await supabase.auth.getUser();
-
-  // if (userFetchingError || !user) {
-  //   return {
-  //     redirect: {
-  //       destination: "/",
-  //       permanent: false,
-  //     },
-  //   };
-  // }
 
   const currentMonth = new Date().getMonth() + 1;
   const currentYear = new Date().getFullYear();
@@ -43,7 +30,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   return {
     props: {
-      user: user?.user_metadata || null,
       drink: drinkData || null,
       limit: limitData || null,
     },
@@ -70,10 +56,12 @@ type MyPageProps = {
   limit: Limit;
 };
 
-export default function MyPage({ user, drink, limit }: MyPageProps) {
+export default function MyPage({ drink, limit }: MyPageProps) {
   const supabase = createClient();
   const router = useRouter();
+  const { user, loading } = useUser();
   const arr = drink.map((d) => d.drinkType);
+  const nickName = user?.user_metadata.name;
 
   const countMap = arr.reduce<Record<string, number>>((acc, cur) => {
     acc[cur] = (acc[cur] || 0) + 1;
@@ -93,12 +81,23 @@ export default function MyPage({ user, drink, limit }: MyPageProps) {
     console.log(error);
   };
 
+  if (loading) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <div className="flex flex-col items-center gap-3">
+          <div className="border-t-primary h-8 w-8 animate-spin rounded-full border-4 border-gray-100" />
+          <span className="text-sm text-gray-500">불러오는 중...</span>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
       <div className="text-text mx-12 flex flex-col gap-12.5 pt-24">
         <div className="flex flex-col">
           <div className="flex flex-row justify-between">
-            <div className="text-2xl font-bold">{user?.name}</div>
+            <div className="text-2xl font-bold">{nickName}</div>
             <button
               onClick={handleLogOut}
               className="cursor-pointer px-2 text-sm"

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { SVGIcon } from "./SVGIcon";
 import DropDownList from "./DropDownList";
 
@@ -9,12 +9,7 @@ type DropBoxProp = {
   value: string;
 };
 
-export default function DropDown({
-  width,
-  listArr,
-  onSelect,
-  value,
-}: DropBoxProp) {
+function DropDown({ width, listArr, onSelect, value }: DropBoxProp) {
   const [isOpened, setIsOpened] = useState(false);
   const [name, setName] = useState(value || "선택해주세요");
 
@@ -41,7 +36,7 @@ export default function DropDown({
         type="button"
         aria-haspopup="listbox"
         aria-expanded={isOpened}
-        className={`${widthSize} flex h-12 cursor-pointer flex-row items-center rounded-xl border-3 ${isOpened ? "border-primary" : "border-gray-300"} px-2 py-[6px]`}
+        className={`${widthSize} flex h-12 cursor-pointer flex-row items-center rounded-xl border-3 ${isOpened ? "border-primary" : "border-gray-300"} px-2 py-1.5`}
         onClick={() => setIsOpened(!isOpened)}
       >
         <span className={`${textColor} flex-1 text-base font-bold`}>
@@ -67,3 +62,5 @@ export default function DropDown({
     </div>
   );
 }
+
+export default memo(DropDown);

@@ -19,19 +19,20 @@ export default function Login() {
     password: "",
   });
   const [validationStates, setValidationStates] = useState({
-    email: true,
-    password: true,
+    email: false,
+    password: false,
   });
-  const [hasSubmitted, setHasSubmitted] = useState(false);
   const [isLoginFailed, setIsLoginFailed] = useState(false);
 
-  // 뒤로가기 버튼
+  const handleFocus = (type: "email" | "password") => {
+    setValidationStates((prev) => ({ ...prev, [type]: false }));
+  };
+
   const handleBackClick = () => {
     router.push("/");
   };
-  // 로그인 버튼
+
   const handleLoginClick = async () => {
-    setHasSubmitted(true);
     const emailValid = isValidEmail(formData.email);
     const passwordValid = isValidPassword(formData.password);
 
@@ -84,7 +85,8 @@ export default function Login() {
               {d.name}
             </label>
             <Input
-              showValidation={hasSubmitted && validationStates[d.type]}
+              onFocus={() => handleFocus(d.type)}
+              showValidation={validationStates[d.type]}
               labelId={d.type}
               type={d.type}
               onChange={(e) =>

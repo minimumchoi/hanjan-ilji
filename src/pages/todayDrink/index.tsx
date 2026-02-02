@@ -4,35 +4,14 @@ import DropDown from "@/components/DropDown";
 import { SVGIcon } from "@/components/SVGIcon";
 import { drinkArr, drinkUnit, todayFeeling } from "@/data/drinkRecord";
 import { createClient } from "@/utils/supabase/component";
-// import { createClient as createServerClient } from "@/utils/supabase/server-props";
 import {
   isValidAmount,
   isValidDrinkType,
   isValidFeeling,
   isValidWithWhom,
 } from "@/utils/todayDrinkValidaion";
-// import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
-import { useEffect, useRef, useState } from "react";
-
-// export async function getServerSideProps(context: GetServerSidePropsContext) {
-//   const supabase = createServerClient(context);
-
-//   const {
-//     data: { user },
-//     error: userFetchingError,
-//   } = await supabase.auth.getUser();
-
-//   if (userFetchingError || !user) {
-//     return {
-//       redirect: {
-//         destination: "/",
-//         permanent: false,
-//       },
-//     };
-//   }
-//   return { props: {} };
-// }
+import { useCallback, useEffect, useRef, useState } from "react";
 
 export default function TodayDrink() {
   const supabase = createClient();
@@ -45,6 +24,7 @@ export default function TodayDrink() {
     withWhom: "",
     feeling: "",
   });
+
   const [formErrors, setFormErrors] = useState({
     drinkType: "",
     amount: "",
@@ -64,10 +44,13 @@ export default function TodayDrink() {
     router.back();
   };
 
-  const handleChange = (key: keyof typeof formData, value: string) => {
-    setFormData((prev) => ({ ...prev, [key]: value }));
-    setFormErrors((prev) => ({ ...prev, [key]: "" }));
-  };
+  const handleChange = useCallback(
+    (key: keyof typeof formData, value: string) => {
+      setFormData((prev) => ({ ...prev, [key]: value }));
+      setFormErrors((prev) => ({ ...prev, [key]: "" }));
+    },
+    [],
+  );
 
   const handleSubmit = async () => {
     const { drinkType, amount, unit, withWhom, feeling } = formData;

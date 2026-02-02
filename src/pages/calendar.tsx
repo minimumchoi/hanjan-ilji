@@ -7,18 +7,6 @@ import { useRouter } from "next/router";
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const supabase = createServerClient(context);
 
-  // const { data: userData, error: userFetchingError } =
-  //   await supabase.auth.getUser();
-
-  // if (userFetchingError || !userData) {
-  //   return {
-  //     redirect: {
-  //       destination: "/",
-  //       permanent: false,
-  //     },
-  //   };
-  // }
-
   const currentMonth = Number(context.query.month);
   const currentYear = new Date().getFullYear();
 
@@ -77,8 +65,6 @@ export default function Calendar({
   monthlyDrinkList,
 }: CalendarProp) {
   const router = useRouter();
-
-  console.log(monthlyDrinkList);
 
   const handleMonth = (selectedMonth: number) => {
     router.push(`/calendar?month=${selectedMonth}`);
